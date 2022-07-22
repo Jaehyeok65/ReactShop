@@ -2,7 +2,17 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  let player = [2,5,10];
+
+  const replay = () => {
+    for(let i in player) {
+      console.log(player[i]);
+    }
+  }
+
   return (
+
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -18,6 +28,8 @@ function App() {
           Learn React
         </a>
       </header>
+
+      {replay()}
     </div>
   );
 }
