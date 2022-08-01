@@ -1,0 +1,8 @@
+.body {
+    margin : 0;
+    padding : 0; /* 마진과 패딩의 여백을 없애줌 */
+}
+
+.home {
+    text-align: center;
+}

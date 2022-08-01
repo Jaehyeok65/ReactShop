@@ -1,0 +1,35 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    position: sticky; /* 스크롤 내려도 유지되게끔 sticky로 선언 */
+}
+
+.list2 {
+    display: flex;
+}
+
+.list1 {
+    display: flex;
+}
+
+.item {
+    margin : 20px 12px;
+}
+
+.items {
+    margin : 20px 12px;
+}
+.logo{
+    display: none;
+}
+
+@media screen and (max-width : 500px) { /* 스마트폰 화면일 때 */
+    .logo {
+        display: flex;
+        margin-left : 12px;
+        border : none;
+        background-color: white;
+        align-items: center;
+    }
+    
+}
