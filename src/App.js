@@ -9,31 +9,37 @@ function App() { //최상위 컴포넌트로 데이터는 App에다가 저장하
       id : 1,
       price : '95,000',
       url : '/image/shop1.PNG',
+      name : 'OVERSIZED MODS WOOL BLAZER [BLACK]'
     },
     {
       id : 2,
       price : '85,000',
-      url : '/image/shop2.PNG'
+      url : '/image/shop2.PNG',
+      name : 'AIRY ZIP-UP COLLAR HALF KNIT [BLACK]'
     },
     {
       id : 3,
       price : '75,000',
-      url : '/image/shop3.PNG'
+      url : '/image/shop3.PNG',
+      name : 'OVERSIZED PULLOVER COLLAR HALF SLEEVE SHIRTS [SKYBLUE]'
     },
     {
       id : 4,
       price : '65,000',
-      url : '/image/shop4.PNG'
+      url : '/image/shop4.PNG',
+      name : 'PAPER COTTON OVER-FIT HALF SLEEVE SHIRT [BLACK]'
     },
     {
       id : 5,
       price : '45,000',
-      url : '/image/shop5.PNG'
+      url : '/image/shop5.PNG',
+      name : 'AIRY ROUND HALF KNIT [SKY BLUE]'
     },
     {
       id : 6,
       price : '35,000',
-      url : '/image/shop6.PNG'
+      url : '/image/shop6.PNG',
+      name : 'AIRY ZIP-UP COLLAR HALF KNIT [CREAM]'
     }
   ]
 
