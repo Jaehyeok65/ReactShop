@@ -7,9 +7,31 @@ import CardComponent from './CardComponent';
 
 
 
+function SampleNextArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background : 'gray' }}
+      onClick={onClick}
+    />
+  );
+}
 
+function SamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background : 'gray' }}
+      onClick={onClick}
+    />
+  );
+}
 
 const Carusel = ( { Goods }) => {
+
+
     const settings = {
         dots: true,
         infinite: true,
@@ -17,6 +39,8 @@ const Carusel = ( { Goods }) => {
         slidesToShow: 3,
         slidesToScroll: 3,
         initialSlide: 0,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />,
         responsive: [
           {
             breakpoint: 1024,
@@ -48,11 +72,17 @@ const Carusel = ( { Goods }) => {
 
 
     return (
+      <div>
+      <div className={styles.pcweek}>
+      <p className={styles.best}>Weekly Best</p>
+      <br/>
+      </div>
         <Slider {...settings} className={styles.carusel}>
           { Goods.map( Good => (
             <CardComponent key = {Good.id} url = {Good.url} price = {Good.price} />
           ))}
         </Slider>
+        </div>
     )
 }
 
