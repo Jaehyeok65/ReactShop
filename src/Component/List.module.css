@@ -1,0 +1,58 @@
+
+
+.shop {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px 20px;
+    margin-left: 20%;
+    margin-right: 5%;
+    margin-bottom: 2%;
+    margin-top: 1%;
+}
+
+.card {
+    border : 1px solid #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+
+}
+
+.cardtop > img {
+    height: 100%;
+    width: 100%;
+}
+
+.cardtop p {
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.cardtop h3 {
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+@media screen and (max-width : 500px) {
+
+    .shop {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 20px 20px;
+        margin : 4%;
+        padding: 0;
+    }
+
+    .cardtop p {
+        font-size: 0.7rem;
+        text-align: center;
+    }
+    
+    .cardtop h3 {
+        font-size: 0.7rem;
+        text-align: center;
+    }
+    
+    
+}

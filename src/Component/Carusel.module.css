@@ -36,13 +36,16 @@
     text-align: center;
 }
 
-.slick-slide > div {
-    margin : 0 10px;
+.slick-slide {
+    margin: 0 27px;
 }
 
+/* the parent */
 .slick-list {
-    margin : 0 10px;
+    margin: 0 -27px;
 }
+
+
 
 @media screen and (max-width : 500px) {
     .carusel {

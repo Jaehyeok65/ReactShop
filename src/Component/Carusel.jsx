@@ -73,8 +73,8 @@ const Carusel = ( { Goods }) => {
 
     return (
       <div>
-      <div className={styles.pcweek}>
       <p className={styles.best}>Weekly Best</p>
+      <div className={styles.pcweek}>
       <br/>
       </div>
         <Slider {...settings} className={styles.carusel}>

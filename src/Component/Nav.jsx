@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import styles from './Nav.module.css';
 import Category from '../Component/Category';
 import MobileCategory from './MobileCategory';
+import { Link } from 'react-router-dom';
 
 
 
 const Nav = () => {
-    const [toggle, setToggle] = useState(true)
+    const [toggle, setToggle] = useState(false)
 
     const onToggle = () => {
         setToggle((prev) => !prev);
@@ -22,7 +23,7 @@ const Nav = () => {
         <div className={styles.nav}>
             <div className={styles.list1}>
                 <button className={styles.logo} onClick={onToggle}>로고</button>
-                <div className={styles.item}>LOGO</div>
+                <div className={styles.item}><Link to ='/'>LOGO</Link></div>
             </div>
             <div className={styles.list2}>
                 <div className={styles.items}>LOGIN</div>
