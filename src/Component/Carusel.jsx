@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styles from './Carusel.module.css';
 import CardComponent from './CardComponent';
+import './Carusel.css';
 
 
 
