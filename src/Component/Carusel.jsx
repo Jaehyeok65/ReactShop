@@ -80,7 +80,7 @@ const Carusel = ( { Goods }) => {
       </div>
         <Slider {...settings} className={styles.carusel}>
           { Goods.map( Good => (
-            <CardComponent key = {Good.id} url = {Good.url} price = {Good.price} name = {Good.name} />
+            <CardComponent key = {Good.id} url = {Good.url} price = {Good.price} name = {Good.name} id = {Good.id} />
           ))}
         </Slider>
         </div>

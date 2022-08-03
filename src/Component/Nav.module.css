@@ -23,6 +23,11 @@
     display: none;
 }
 
+.textlink {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 @media screen and (max-width : 500px) { /* 스마트폰 화면일 때 */
     .logo {
         display: flex;

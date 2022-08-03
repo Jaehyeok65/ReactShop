@@ -1,10 +1,12 @@
 import React,{ useState }from 'react';
 import styles from './Carusel.module.css';
+import { Link } from 'react-router-dom';
 
 
-const CardComponent = ({ url , price, name }) => {
+const CardComponent = ({ url , price, name, id }) => {
 
     const [toggle, setToggle] = useState(true);
+
 
 
     
@@ -12,6 +14,7 @@ const CardComponent = ({ url , price, name }) => {
 
     return (
         <>
+         <Link to={`/product/${id}`} className={styles.textlink}>
         <div className={styles.card}>
             <div className={styles.cardtop}>
                 { toggle ? <img src={url} alt={price} /> : null}
@@ -19,6 +22,7 @@ const CardComponent = ({ url , price, name }) => {
                 <h3>{price}</h3>
             </div>
         </div>
+        </Link>
         </>
     )
 }

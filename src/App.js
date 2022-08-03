@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'; //화면 전환에 필요한 라우터 임포트
 import Home from './Router/Home';
+import Product from './Router/Product';
 import Shop from './Router/Shop';
 
 function App() { //최상위 컴포넌트로 데이터는 App에다가 저장하여 props로 전달해줄 것.
@@ -56,6 +57,9 @@ function App() { //최상위 컴포넌트로 데이터는 App에다가 저장하
         </Route>
         <Route exact path='/shop'>
           <Shop Goods={Goods}/>
+        </Route>
+        <Route exact path='/product/:id'>
+          <Product Goods={Goods} />
         </Route>
       </Switch>
     </Router>

@@ -20,6 +20,11 @@
 
 }
 
+.textlink {
+    color: inherit;
+    text-decoration: inherit;
+}
+
 .cardtop > img {
     height: 100%;
     width: 100%;
@@ -28,12 +33,12 @@
 }
 
 .cardtop p {
-    font-size: 1rem;
+    font-size: 0.8rem;
     text-align: center;
 }
 
 .cardtop h3 {
-    font-size: 1rem;
+    font-size: 0.8rem;
     text-align: center;
 }
 
@@ -60,5 +65,16 @@
     .pcweek {
         display: none;
     }
+
+    .cardtop p {
+        font-size: 0.7rem;
+        text-align: center;
+    }
+    
+    .cardtop h3 {
+        font-size: 0.7rem;
+        text-align: center;
+    }
+    
     
 }
