@@ -73,7 +73,7 @@ const Carusel = ( { Goods }) => {
 
 
     return (
-      <div>
+      <div className={styles.body}>
       <p className={styles.best}>Weekly Best</p>
       <div className={styles.pcweek}>
       <br/>

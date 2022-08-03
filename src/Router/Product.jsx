@@ -4,6 +4,7 @@ import Nav from '../Component/Nav';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import Category from '../Component/Category';
 
 
 const Product = ( { Goods } ) => {
@@ -31,6 +32,8 @@ const Product = ( { Goods } ) => {
         <>
         <div className={styles.body}>
             <Nav />
+            <div className={styles.sort}>
+            <Category />
             <div className={styles.container}>
                 <div className={styles.fonts}>
                     <p>{product !== null ? product.name : null}</p>
@@ -51,6 +54,7 @@ const Product = ( { Goods } ) => {
                 <div className={styles.images}>
                     <img src={product !== null ? product.url : null} alt='이미지' />
                 </div>
+            </div>
             </div>
         </div>
         </>

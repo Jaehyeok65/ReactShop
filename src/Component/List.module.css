@@ -4,10 +4,11 @@
     display: grid;
     grid-template-columns: repeat(4,1fr);
     gap: 20px 20px;
-    margin-left: 20%;
+    margin-left: 5%;
     margin-right: 5%;
     margin-bottom: 2%;
     margin-top: 1%;
+    /*top : 10%;*/
 }
 
 .card {
@@ -45,7 +46,7 @@
         display: grid;
         grid-template-columns: repeat(2,1fr);
         gap: 20px 20px;
-        margin : 4%;
+        margin : 2%;
         padding: 0;
     }
 
