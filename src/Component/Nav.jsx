@@ -3,6 +3,8 @@ import styles from './Nav.module.css';
 import Category from '../Component/Category';
 import MobileCategory from './MobileCategory';
 import { Link } from 'react-router-dom';
+import { FaList } from "react-icons/fa";
+import { RiHeading } from "react-icons/ri";
 
 
 
@@ -22,8 +24,8 @@ const Nav = () => {
         <>
         <div className={styles.nav}>
             <div className={styles.list1}>
-                <button className={styles.logo} onClick={onToggle}>로고</button>
-                <div className={styles.item}><Link to ='/' className={styles.textlink}>LOGO</Link></div>
+                <button className={styles.logo} onClick={onToggle}><FaList size='24px' /></button>
+                <div className={styles.item}><Link to ='/'><RiHeading color='black' size='24px' /></Link></div>
             </div>
             <div className={styles.list2}>
                 <div className={styles.items}>LOGIN</div>
