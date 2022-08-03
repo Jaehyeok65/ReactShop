@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Category from '../Component/Category';
+import Footer from '../Component/Footer';
 
 
 const Product = ( { Goods } ) => {
@@ -56,6 +57,7 @@ const Product = ( { Goods } ) => {
                 </div>
             </div>
             </div>
+            <Footer />
         </div>
         </>
     )

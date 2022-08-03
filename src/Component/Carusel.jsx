@@ -75,9 +75,7 @@ const Carusel = ( { Goods }) => {
     return (
       <div className={styles.body}>
       <p className={styles.best}>Weekly Best</p>
-      <div className={styles.pcweek}>
       <br/>
-      </div>
         <Slider {...settings} className={styles.carusel}>
           { Goods.map( Good => (
             <CardComponent key = {Good.id} url = {Good.url} price = {Good.price} name = {Good.name} id = {Good.id} />

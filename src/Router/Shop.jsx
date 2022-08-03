@@ -1,5 +1,6 @@
 import React from 'react';
 import Category from '../Component/Category';
+import Footer from '../Component/Footer';
 import styles from '../Component/Home.module.css'
 import Nav from '../Component/Nav';
 import ShopList from '../Component/ShopList';
@@ -16,6 +17,7 @@ const Shop = ( { Goods }) => {
             <Category />
             <ShopList Goods = {Goods} />
             </div>
+            <Footer />
         </div>
         </>
     )

@@ -1,0 +1,96 @@
+
+.flexcontainer1 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flexitem1, .flexitem2 {
+    margin: 15px 4px;
+    font-size: 13px;
+}
+
+.insta1, .kakao1 {
+    margin-left: 12px;
+}
+
+.flexitem2 span:nth-child(1) {
+    margin-right: 12px;
+}
+
+.flexitem2 span:nth-child(2) {
+    margin-right: 12px;
+}
+
+.flexitem2 span:nth-child(3) {
+    margin-right: 12px;
+}
+
+.flexitem2 span:nth-child(4) {
+    margin-right: 12px;
+}
+
+.flexitem2 span:nth-child(5) {
+    margin-right: 12px;
+}
+
+.flexcontainer2 {
+    text-align: right;
+    padding: 20px;
+    font-size: 12px;
+}
+
+.flexcontainer2 ul {
+    list-style-type: none;
+}
+
+
+/*.font1, .font2 {
+    margin-bottom: 10px;
+}*/
+
+.hr1 {
+    width: 99%;
+}
+
+@media screen and (max-width : 500px) {
+
+    .flexcontainer1 {
+        display: flex;
+    }
+
+    .flexitem1 {
+        flex : 1;
+    }
+
+    .flexitem2 {
+        flex : 1;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .insta1, .kakao1 {
+        margin-left: 8px;
+    }
+    
+    .flexitem2 span:nth-child(1) {
+        margin-right: 8px;
+    }
+    
+    .flexitem2 span:nth-child(2) {
+        margin-right: 8px;
+    }
+    
+    .flexitem2 span:nth-child(3) {
+        margin-right: 8px;
+    }
+    
+    .flexitem2 span:nth-child(4) {
+        margin-right: 8px;
+    }
+    
+    .flexitem2 span:nth-child(5) {
+        margin-right: 8px;
+    }
+
+
+}
