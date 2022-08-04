@@ -1,0 +1,98 @@
+.body {
+    margin : 0;
+    padding : 0; /* 마진과 패딩의 여백을 없애줌 */
+}
+
+.sort {
+    display: flex;
+}
+
+.imgs {
+    width: 100px;
+    height: 100px;
+}
+
+table td {
+    padding: 12px;
+    font-size: 12px;
+}
+
+table th {
+    padding: 12px;
+    font-size: 12px;
+    font-weight: 110;
+}
+
+
+
+.cart {
+    width: 70%;
+    margin: 0 auto;
+}
+
+table {
+    width: 100%;
+}
+
+table , th, td {
+    border-left: none;
+    border-right: none;
+    border-collapse: collapse;
+}
+th {
+    border-top: gray;
+}
+
+td{
+    text-align: center;
+}
+
+td:nth-child(3) {
+    text-align: left;
+}
+
+.tfoots {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+
+tfoot td {
+    text-align: right;
+    font-size: 12px;
+    padding: 20px;
+}
+
+.secondtable th, .secondtable td {
+    padding: 24px;
+}
+
+.secondtable td:nth-child(3) {
+    text-align: center;
+}
+
+.secondtable th {
+    font-size: 10px;
+}
+
+.secondtable td {
+    
+    font-size : 18px;
+}
+
+.order {
+    display: flex;
+    padding: 24px;
+    justify-content: center;
+}
+
+.order button {
+    margin : 2px;
+    padding: 10px;
+}
+
+.order button:nth-child(1) {
+    background: black;
+    color: white;
+}

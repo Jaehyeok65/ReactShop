@@ -72,7 +72,6 @@ function App() { //최상위 컴포넌트로 데이터는 App에다가 저장하
     });
   }
 
-  console.log(user);
 
 
   
