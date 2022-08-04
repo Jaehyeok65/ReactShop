@@ -1,0 +1,53 @@
+.body {
+    margin : 0;
+    padding : 0; /* 마진과 패딩의 여백을 없애줌 */
+}
+
+.sort {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.footer {
+    bottom: 1px;
+}
+
+.container {
+    margin : 0 auto;
+}
+
+.logincontainer {
+    display: flex;
+    flex-direction: column;
+    margin-right: 200px;
+}
+
+.logincontainer h2 {
+    text-align: center;
+    margin-top: 10%;
+}
+
+.spans {
+    text-align: center;
+    margin-bottom: 25%;
+    margin-right: 200px;
+}
+
+
+
+.logincontainer input:nth-child(2) {
+    width: 400px;
+    height: 40px;
+    margin-top: 10%;
+}
+
+.logincontainer input:nth-child(3) {
+    width: 400px;
+    height: 40px;
+}
+
+.logincontainer input:nth-child(4) {
+    width: 409px;
+    height: 40px;
+}
