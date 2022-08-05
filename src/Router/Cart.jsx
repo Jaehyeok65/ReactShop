@@ -100,8 +100,8 @@ const Cart = () => {
                 </tfoot>
             </table>
             <div className={styles.tfoots}>
-            <p style={{ marginLeft : '8px'}}>선택 상품을 <button>삭제</button></p>
-            <p><button>장바구기 비우기</button><button style={{margin : '4px'}}>견적서 출력</button></p>
+            <p style={{ marginLeft : '8px', marginTop : '16px'}}>선택 상품을 <button style={{ background:  'black' , color : 'white', fontSize : '11px' }}>삭제</button></p>
+            <p><button style={{ background:  'black' , color : 'white', fontSize : '11px'}}>장바구기 비우기</button><button style={{margin : '4px', background : 'black', color : 'white', fontSize : '11px'}}>견적서 출력</button></p>
             </div>
             <br />
             <br />

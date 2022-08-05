@@ -56,8 +56,11 @@
 @media screen and (max-width : 500px) {
 
     .carusel {
-        width: 80%;
-        margin: 0 auto;
+        margin-left: 26%;
+    }
+
+    .best {
+        margin-left: 33%;
     }
 
     .cardtop > img {

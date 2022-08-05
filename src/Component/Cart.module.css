@@ -96,3 +96,13 @@ tfoot td {
     background: black;
     color: white;
 }
+
+@media screen and (max-width : 500px) {
+
+    .cart {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    
+}

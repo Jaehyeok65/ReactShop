@@ -55,7 +55,7 @@ function Login() {
     <div className={styles.body}>
         <Nav />
         <div className={styles.sort}>
-        <Category />
+        <Category className={styles.categoryinfo} />
       <div className={styles.container}>
       <form onSubmit={onSubmit}>
         <div className={styles.logincontainer}>

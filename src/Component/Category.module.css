@@ -27,7 +27,7 @@
 }
 
 @media screen and (max-width : 500px) { /* 모바일 화면에서는 카테고리가 안보이도록 none 처리*/
-    /*.category {
+    .category {
         display: none;
-    }*/
+    }
 }

@@ -5,7 +5,6 @@
 
 .sort {
     display: flex;
-    justify-content: space-between;
 }
 
 
@@ -50,4 +49,45 @@
 .logincontainer input:nth-child(4) {
     width: 409px;
     height: 40px;
+}
+
+@media screen and (max-width : 500px) {
+    .logincontainer input:nth-child(2) {
+        width: 300px;
+        height: 40px;
+    }
+    
+    .logincontainer input:nth-child(3) {
+        width: 300px;
+        height: 40px;
+    }
+    
+    .logincontainer input:nth-child(4) {
+        width: 308px;
+        height: 40px;
+    }
+
+    .logincontainer h2 {
+        width: 300px;
+        text-align: center;
+    }
+
+    .logincontainer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .spans {
+        text-align: center;
+        width: 300px;
+    }
+
+    .sort {
+        display: block;
+    }
+
+    .container {
+        margin-left: 18%;
+    }
+    
 }
