@@ -1,0 +1,79 @@
+.body {
+    margin : 0;
+    padding : 0; /* 마진과 패딩의 여백을 없애줌 */
+}
+
+.sort {
+    display: flex;
+}
+
+.container {
+    width: 100%;
+    margin-right: 18%;
+    margin-left: 10%;
+}
+
+
+.container p {
+    font-size: 12px;
+}
+
+.gridcontainer {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.gridcontainer1 {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    margin-right: 40%;
+}
+
+.gridcontainer1 button {
+    font-size: 12px;
+}
+
+.gridcontainer2 {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    margin-right: 20%;
+    margin-bottom: 10%;
+}
+
+.gridcontainer button {
+    padding : 12px;
+    margin: 2px;
+    background-color: white;
+    border: 1px solid gray;
+}
+
+
+@media screen and (max-width : 500px) {
+    .container {
+        width: 100%;
+        margin-right: 4%;
+        margin-left: 4%;
+    }
+
+    .gridcontainer button {
+        padding : 14px 4px;
+        margin: 2px;
+        background-color: white;
+        border: 1px solid gray;
+        font-size: 12px;
+    }
+
+    .gridcontainer1 {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+    }
+
+    .gridcontainer2 {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+    }
+    
+    
+}
