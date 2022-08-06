@@ -26,10 +26,9 @@ const Nav = () => {
             <div className={styles.list2}>
                 <div className={styles.items}><Link to='/shop' className={styles.textlink}>SHOP</Link></div>
                 <div className={styles.items}><Link to='/login' className={styles.textlink}>LOGIN</Link></div>
-                <div className={styles.items}>JOIN</div>
-                <div className={styles.items}><Link to='/myshop' className={styles.textlink}>MYSHOP</Link></div>
+                <div className={styles.items}><Link to='/login' className={styles.textlink}>JOIN</Link></div>
                 <div className={styles.items}><Link to='/cart' className={styles.textlink}>CART</Link></div>
-                <div className={styles.items}>ORDER</div>
+                <div className={styles.items}><Link to='/myshop' className={styles.textlink}>MYSHOP</Link></div>
             </div>
         </div>
 

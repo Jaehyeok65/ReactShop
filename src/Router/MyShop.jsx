@@ -3,10 +3,35 @@ import Nav from '../Component/Nav';
 import Category from '../Component/Category';
 import Footer from '../Component/Footer';
 import styles from '../Component/MyShop.module.css'
+import { Transition } from 'react-transition-group';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
+
+const duration = 1000;
+
+const defaultStyle = {
+  transition: `all ${duration}ms ease-in-out`,
+  opacity: 0,
+}
+
+const transitionStyles = {
+  entering: { opacity: 0 , transform : 'translate3d(0, 4%, 0)'},
+  entered:  { opacity: 1 , transform: 'translate3d(0, 0,0)'},
+  exiting:  { opacity: 1 , transform: 'translate3d(0, 0,0)'},
+  exited:  { opacity: 0 },
+};
+
 
 
 
 const MyPage = () => {
+
+    const [toggle, setToggle] = useState(false);
+
+    useEffect( () => {
+        setToggle(prev => !prev);
+    }, [])
 
 
     return(
@@ -16,6 +41,10 @@ const MyPage = () => {
             <div className={styles.sort}>
             <Category />
             <div className={styles.container}>
+            <Transition in={toggle} timeout={500} appear>
+                      { (state) => 
+                          (
+                     <div style={{...defaultStyle,...transitionStyles[state]}}>
                 <p>MYPAGE</p>
                 <br/>
                 <div className={styles.gridcontainer}>
@@ -52,7 +81,9 @@ const MyPage = () => {
                     <p>&gt; 배송중 : &nbsp;0&nbsp;</p>
                     <p>&gt; 배송완료 : &nbsp;0&nbsp;</p>
                 </div>
-
+                </div>)
+                     }
+                     </Transition>
             </div>
             </div>
             <br/>

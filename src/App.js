@@ -6,6 +6,7 @@ import Product from './Router/Product';
 import Shop from './Router/Shop';
 import mybase from './mybase';
 import Cart from './Router/Cart';
+import MyShop from './Router/MyShop';
 
 function App() { //최상위 컴포넌트로 데이터는 App에다가 저장하여 props로 전달해줄 것.
 
@@ -94,6 +95,9 @@ function App() { //최상위 컴포넌트로 데이터는 App에다가 저장하
         </Route>
         <Route exact path='/cart'>
           <Cart />
+        </Route>
+        <Route exact path='/myshop'>
+          <MyShop />
         </Route>
       </Switch>
     </Router>
