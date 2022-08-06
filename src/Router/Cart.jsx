@@ -81,10 +81,10 @@ const Cart = () => {
                     <Category />
                     <div className={styles.cart}>
                     <Transition in={toggle} timeout={500} appear>
-            { (state) => 
-            (
-            <div style={{...defaultStyle,...transitionStyles[state]}}>
-                    <table border = "1px solid gray">
+                      { (state) => 
+                          (
+                     <div style={{...defaultStyle,...transitionStyles[state]}}>
+                       <table border = "1px solid gray">
                         <thead>
                         <tr>
                             <th><input type='checkbox' /></th>
