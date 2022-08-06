@@ -3,6 +3,7 @@
     justify-content: space-between;
     position: sticky; /* 스크롤 내려도 유지되게끔 sticky로 선언 */
     top : 0;
+    z-index: 999;
 }
 
 .list2 {

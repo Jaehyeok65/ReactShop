@@ -80,7 +80,7 @@ const Cart = () => {
                 <div className={styles.sort}>
                     <Category />
                     <div className={styles.cart}>
-                    <Transition in={toggle} timeout={500} appear>
+                    <Transition in={toggle} timeout={500}>
                       { (state) => 
                           (
                      <div style={{...defaultStyle,...transitionStyles[state]}}>

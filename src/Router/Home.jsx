@@ -1,12 +1,12 @@
 import React from 'react';
-import Carusel from '../Component/Carusel';
 import Category from '../Component/Category';
 import Footer from '../Component/Footer';
-import styles from '../Component/Home.module.css'
+import styles from '../Component/Carusel2.module.css'
 import Nav from '../Component/Nav';
 import { Transition } from 'react-transition-group';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const duration = 1000;
 
@@ -34,22 +34,24 @@ const Home = ({ Goods } ) => {
     }, [])
     
     return (
-        <>
         <div className={styles.body}>
-            <Nav />
-            <div className={styles.sort}>
-            <Category />
-            <Transition in={toggle} timeout={500} appear>
-                { (state) => (
-                <div style={ {...defaultStyle, ...transitionStyles[state]}} className={styles.mobile}>
-            <Carusel Goods = {Goods} />
-            </div>)}
-            </Transition>
+        <Nav />
+        <Category />
+        <div className={styles.container}>
+            <div className={styles.outer}>
+                <div className={styles.details}>
+                    <Transition in={toggle} timeout={700}>
+                        {(state) => (
+                            <div style={{...defaultStyle,...transitionStyles[state]}}>
+                             <h2>Best Selling Items</h2>
+                             <p><Link to='/shop' className={styles.textlink}>SHOP NOW</Link></p>
+                            </div>
+                        )}
+                    </Transition>
+                </div>
             </div>
-            <br/>
-            <Footer />
         </div>
-        </>
+    </div>
     )
 }
 

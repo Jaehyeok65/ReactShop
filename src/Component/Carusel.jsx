@@ -42,6 +42,7 @@ const Carusel = ( { Goods }) => {
         initialSlide: 0,
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />,
+        autoplay : true,
         responsive: [
           {
             breakpoint: 1024,

@@ -15,12 +15,8 @@ const CardComponent = ({ url , price, name, id }) => {
     return (
         <>
          <Link to={`/product/${id}`} className={styles.textlink}>
-        <div className={styles.card}>
-            <div className={styles.cardtop}>
+        <div className={styles.imgs}>
                 { toggle ? <img src={url} alt={price} /> : null}
-                <p>{name}</p>
-                <h3>{price}</h3>
-            </div>
         </div>
         </Link>
         </>
