@@ -97,7 +97,13 @@ function Login() {
         </Transition>
       </div>
       </div>
-      <Footer className={styles.footer} />
+      <Transition in={toggle} timeout={500} appear>
+        { (state) => (
+            <div style={{...defaultStyle,...transitionStyles[state]}}>
+                 <Footer className={styles.footer} />
+            </div>
+        )}
+      </Transition>
     </div>
   );
 }
