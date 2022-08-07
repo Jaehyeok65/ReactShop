@@ -25,14 +25,14 @@
     width: 100%;
 }
 
-.cardtop p {
+.cardtop p:nth-child(2) {
     font-size: 0.8rem;
-    text-align: center;
+    text-align: left;
 }
 
-.cardtop h3 {
+.cardtop p:nth-child(3) {
     font-size: 0.8rem;
-    text-align: center;
+    text-align: right;
 }
 
 .textlink {
@@ -50,14 +50,14 @@
         padding: 0;
     }
 
-    .cardtop p {
+    .cardtop p:nth-child(2) {
         font-size: 0.7rem;
-        text-align: center;
+        text-align: left;
     }
     
-    .cardtop h3 {
+    .cardtop p:nth-child(3) {
         font-size: 0.7rem;
-        text-align: center;
+        text-align: right;
     }
     
     

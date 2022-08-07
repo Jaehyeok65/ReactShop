@@ -10,12 +10,13 @@ import Footer from '../Component/Footer';
 
 const Product = ( { Goods } ) => {
 
-    const { id } = useParams();
+    const { name }  = useParams();
     const [product, setProduct] = useState(null);
+    console.log(name);
 
     const find = () => {
         for(let i in Goods) {
-            if(Goods[i].id === parseInt(id)) {
+            if(Goods[i].name === name) {
                 setProduct(Goods[i]);
                 break;
             }
@@ -26,7 +27,7 @@ const Product = ( { Goods } ) => {
         find();
     },[])
 
-    console.log(product);
+    //console.log(product);
 
     
     return (

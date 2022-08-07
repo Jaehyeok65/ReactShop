@@ -44,15 +44,35 @@
 }
 @keyframes animate {
     0%,100% {
-        background-image: url(../../public/image/shop1.PNG);
+        background-image: url(../../public/image/cabeza5.jpg);
     }
     25% {
-        background-image: url(../../public/image/shop2.PNG);
+        background-image: url(../../public/image/cabeza1.jpg);
     }
     50% {
-        background-image: url(../../public/image/shop3.PNG);
+        background-image: url(../../public/image/cabeza10.jpg);
     }
     75% {
-        background-image: url(../../public/image/shop4.PNG);
+        background-image: url(../../public/image/cabeza12.jpg);
     }
+}
+
+@media screen and (max-width:500px) {
+
+    .details {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        text-align: center;   
+        width: 71%;
+    }
+
+    .details h2, .details p {
+        color: white;
+        font-size: 18px;
+        margin-left: 90px;
+    }
+    
+    
 }

@@ -13,12 +13,12 @@ const ListCard = ({ url , price, name, id }) => {
 
     return (
         <>
-        <Link to={`/product/${id}`} className={styles.textlink}>
+        <Link to={`/product/${name}`} className={styles.textlink}>
         <div className={styles.card}>
             <div className={styles.cardtop}>
                 { toggle ? <img src={url} alt={price} /> : null}
                 <p>{name}</p>
-                <h3>{price}</h3>
+                <p>{price}원</p>
             </div>
         </div>
         </Link>
