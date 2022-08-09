@@ -11,13 +11,22 @@ import Footer from '../Component/Footer';
 const Product = ( { Goods } ) => {
 
     const { name }  = useParams();
-    const [product, setProduct] = useState(null);
-    console.log(name);
+    const [product, setProduct] = useState(() => 
+        JSON.parse(window.localStorage.getItem('product')) || null
+    );
+    //console.log(name);
+    //console.log(Goods);
+
+
+    /*const additem = () => {   //장바구니에 아이템을 추가함
+        window.sessionStorage.setItem('item1',product);
+    }*/
 
     const find = () => {
         for(let i in Goods) {
             if(Goods[i].name === name) {
                 setProduct(Goods[i]);
+                window.localStorage.setItem("product",JSON.stringify(Goods[i]));
                 break;
             }
         }
@@ -25,6 +34,7 @@ const Product = ( { Goods } ) => {
     
     useEffect( () => {
         find();
+        //window.localStorage.setItem("product",JSON.stringify(product));
     },[])
 
     //console.log(product);
