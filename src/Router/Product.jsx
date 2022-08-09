@@ -35,6 +35,16 @@ const Product = ( { Goods } ) => {
     //console.log(name);
     //console.log(Goods);
 
+    
+    const price = (cartarray) => {
+        let money = 0;
+        for(let i in cartarray) {
+            money += parseInt(cartarray[i].price) * 1000;
+        }
+
+        return money;
+    }
+
 
 
 
@@ -67,14 +77,19 @@ const Product = ( { Goods } ) => {
             if(res !== null) { //기존에 장바구니에 상품이 있다면
             const cartarray = array.concat(res); //배열을 만들어서 기존에 장바구니에 있던 상품에 현재 상품을 추가
             const cartarrays = [...cartarray, product];
+            const money = price(cartarrays);
             window.localStorage.setItem('cart',JSON.stringify(cartarrays)); //새로 만든 배열을 장바구니에 추가
+            window.localStorage.setItem('total',JSON.stringify(money)); //Total 머니를 장바구니에 추가
             const confirms = window.confirm('장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?');
                 if(confirms) {
                     window.location.href = "/cart"
                 }
             }
             else {  //기존에 장바구니에 상품이 없다면
-                window.localStorage.setItem('cart',JSON.stringify(product)); //현재 상품만 장바구니에 추가
+                const cartarrays = array.concat(product); //map함수를 사용해야하므로 배열형태로 장바구니에 추가
+                const money = price(cartarrays);
+                window.localStorage.setItem('cart',JSON.stringify(cartarrays)); //현재 상품만 장바구니에 추가
+                window.localStorage.setItem('total',JSON.stringify(money)); //Total 머니를 장바구니에 추가
                 const confirms = window.confirm('장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?');
                 if(confirms) {
                     window.location.href = "/cart"
