@@ -28,50 +28,22 @@ const Cart = () => {
 
     const [total, setTotal] = useState(0);
     const [toggle, setToggle] = useState(false);
+    const [cart, setCart] = useState([]);
 
     useEffect( () => {
-        let price = 0;
-        for(let i in data) {
-            price += parseInt(data[i].price) * 1000;
-        } 
-        setTotal(price);
         setToggle(prev => !prev);
+        setCart(JSON.parse(window.localStorage.getItem('cart')));
+        Total();
     },[])
 
-
-    
-
-    const data = [{
-        check : false,
-        imgurl : '/image/shop1.PNG',
-        shopinfo : 'OVERSIZED MODS WOOL BLAZER [BLACK]',
-        price : '34,000',
-        수량 : 0,
-        적립금 : '-',
-        배송비 : 0,
-        합계 : 0
-    }, {
-        check : false,
-        imgurl : '/image/shop2.PNG',
-        shopinfo : 'AIRY ZIP-UP COLLAR HALF KNIT [BLACK]',
-        price : '35,000',
-        수량 : 0,
-        적립금 : '-',
-        배송비 : 0,
-        합계 : 0
-
-    },
-        {
-            check : false,
-            imgurl : '/image/shop3.PNG',
-            shopinfo : 'OVERSIZED PULLOVER COLLAR HALF SLEEVE SHIRTS [SKYBLUE]',
-            price : '36,000',
-            수량 : 0,
-            적립금 : '-',
-            배송비 : 0,
-            합계 : 0
-
-        }]
+    const Total = () => {
+        let price = 0;
+        console.log(cart);
+        for(let i in cart) {
+            console.log(cart[i]);
+        }
+        console.log(price);
+    }
 
 
     return(
@@ -98,18 +70,18 @@ const Cart = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {data.map( (data, index) => (
+                            { cart !== null ?  cart.map( (data, index) => (
                             <tr key={index}>
                                 <td>{<input type='checkbox' value={data.check} />}</td>
-                                <td className={styles.imgs}>{<img src={data.imgurl} alt = {data.shopinfo} width='110px' height='120px' />}</td>
-                                <td>{data.shopinfo}</td>
+                                <td className={styles.imgs}>{<img src={data.url} alt = {data.shopinfo} width='110px' height='120px' />}</td>
+                                <td>{data.name}</td>
                                 <td>{data.price}원</td>
-                                <td>{data.수량}</td>
-                                <td>{data.적립금}</td>
-                                <td>{data.배송비}</td>
-                                <td>{data.합계}원</td>
+                                <td>{1}</td>
+                                <td>{0}</td>
+                                <td>{0}</td>
+                                <td>{data.price}원</td>
                             </tr>
-                        ))}
+                        )) : null }
                         </tbody>
                         <tfoot>
                             <tr>
