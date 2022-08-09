@@ -23,6 +23,7 @@ const transitionStyles = {
 };
 
 
+
 const Product = ( { Goods } ) => {
 
     const { name }  = useParams();
@@ -30,13 +31,61 @@ const Product = ( { Goods } ) => {
         JSON.parse(window.localStorage.getItem('product')) || null
     );
     const [toggle, setToggle] = useState(false);
+    const [array,setArray] = useState([]);
     //console.log(name);
     //console.log(Goods);
 
 
-    /*const additem = () => {   //장바구니에 아이템을 추가함
-        window.sessionStorage.setItem('item1',product);
-    }*/
+
+
+    const additem = () => {   //장바구니에 아이템을 추가함
+
+        const res = JSON.parse(window.localStorage.getItem('cart')); //장바구니에 동일한 상품이 있는지 확인
+        const resarray = array.concat(res); //find함수를 사용하기 위해 concat을 이용해 배열로 만듬
+        let response = null;
+        if(res !== null) { //res가 null이라면 find함수가 작동하지 않으므로 null이 아닌 경우에만 find함수를 사용
+        response = resarray.find( item => { //장바구니 내역에서 현재 상품과 이름이 같은 아이템을 찾음
+            return item.name === product.name
+        })}
+        if(response !== undefined && response !== null) { //undefined가 아니고 초기값 null이 아니라면 장바구니에 동일한 상품이 있는 것
+            const confirm = window.confirm('장바구니에 동일한 상품이 있습니다. 상품을 추가하시겠습니까?');
+            if(confirm) {
+                const confirms = window.confirm('장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?');
+                if(confirms) {
+                    window.location.href = "/cart"
+                }
+                return ; //이미 장바구니에 저장이 되어있으므로 return
+            }
+            return;
+        }
+        else {  //undefined이거나 초기값 null이라면 장바구니에 동일한 상품이 없는 것
+
+        const confirm = window.confirm('상품을 장바구니에 추가하시겠습니까?');
+        if(confirm) {
+            const res = JSON.parse(window.localStorage.getItem('cart')); //기존에 장바구니에 있던 상품을 가져옴
+            //console.log(res);
+            if(res !== null) { //기존에 장바구니에 상품이 있다면
+            const cartarray = array.concat(res); //배열을 만들어서 기존에 장바구니에 있던 상품에 현재 상품을 추가
+            const cartarrays = [...cartarray, product];
+            window.localStorage.setItem('cart',JSON.stringify(cartarrays)); //새로 만든 배열을 장바구니에 추가
+            const confirms = window.confirm('장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?');
+                if(confirms) {
+                    window.location.href = "/cart"
+                }
+            }
+            else {  //기존에 장바구니에 상품이 없다면
+                window.localStorage.setItem('cart',JSON.stringify(product)); //현재 상품만 장바구니에 추가
+                const confirms = window.confirm('장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?');
+                if(confirms) {
+                    window.location.href = "/cart"
+                }
+            }
+        }
+    }
+    }
+
+  
+    
 
     const find = () => {
         for(let i in Goods) {
@@ -79,7 +128,7 @@ const Product = ( { Goods } ) => {
                          <h5>TOTAL &nbsp;:&nbsp; {product !== null ? product.price : null}원</h5>
                          <div className={styles.button}>
                              <button>BUY NOW</button>
-                             <button>ADD CART</button>
+                             <button onClick={additem}>ADD CART</button>
                              <button>WISH LIST</button>
                          </div>
                      </div>
