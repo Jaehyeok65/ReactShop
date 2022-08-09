@@ -6,6 +6,21 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import Category from '../Component/Category';
 import Footer from '../Component/Footer';
+import { Transition } from 'react-transition-group';
+
+const duration = 1000;
+
+const defaultStyle = {
+  transition: `all ${duration}ms ease-in-out`,
+  opacity: 0,
+}
+
+const transitionStyles = {
+  entering: { opacity: 0 , transform : 'translate3d(0, 4%, 0)'},
+  entered:  { opacity: 1 , transform: 'translate3d(0, 0,0)'},
+  exiting:  { opacity: 1 , transform: 'translate3d(0, 0,0)'},
+  exited:  { opacity: 0 },
+};
 
 
 const Product = ( { Goods } ) => {
@@ -14,6 +29,7 @@ const Product = ( { Goods } ) => {
     const [product, setProduct] = useState(() => 
         JSON.parse(window.localStorage.getItem('product')) || null
     );
+    const [toggle, setToggle] = useState(false);
     //console.log(name);
     //console.log(Goods);
 
@@ -34,6 +50,7 @@ const Product = ( { Goods } ) => {
     
     useEffect( () => {
         find();
+        setToggle(prev => !prev);
         //window.localStorage.setItem("product",JSON.stringify(product));
     },[])
 
@@ -46,27 +63,33 @@ const Product = ( { Goods } ) => {
             <Nav />
             <div className={styles.sort}>
             <Category />
-            <div className={styles.container}>
-                <div className={styles.fonts}>
-                    <p>{product !== null ? product.name : null}</p>
-                    <p>{product !== null ? product.price : null}원</p>
-                    <p>3,000원 (50,000원 이상 구매 시 무료)</p>
-                    <br/>
-                    <p>PRODUCT INFO &gt;</p>
-                    <p>SHIPPING INFO &gt;</p>
-                    <p>SIZEGUIDE INFO &gt;</p>
-                    <br/>
-                    <h5>TOTAL &nbsp;:&nbsp; {product !== null ? product.price : null}원</h5>
-                    <div className={styles.button}>
-                        <button>BUY NOW</button>
-                        <button>ADD CART</button>
-                        <button>WISH LIST</button>
-                    </div>
-                </div>
-                <div className={styles.images}>
-                    <img src={product !== null ? product.url : null} alt='이미지' />
-                </div>
-            </div>
+            <Transition in={toggle} timeout={500} appear>
+                { (state =>  (
+                    <div style={ {...defaultStyle, ...transitionStyles[state]}}>
+                     <div className={styles.container}>
+                     <div className={styles.fonts}>
+                         <p>{product !== null ? product.name : null}</p>
+                         <p>{product !== null ? product.price : null}원</p>
+                         <p>3,000원 (50,000원 이상 구매 시 무료)</p>
+                         <br/>
+                         <p>PRODUCT INFO &gt;</p>
+                         <p>SHIPPING INFO &gt;</p>
+                         <p>SIZEGUIDE INFO &gt;</p>
+                         <br/>
+                         <h5>TOTAL &nbsp;:&nbsp; {product !== null ? product.price : null}원</h5>
+                         <div className={styles.button}>
+                             <button>BUY NOW</button>
+                             <button>ADD CART</button>
+                             <button>WISH LIST</button>
+                         </div>
+                     </div>
+                     <div className={styles.images}>
+                         <img src={product !== null ? product.url : null} alt='이미지' />
+                     </div>
+                 </div>
+                 </div>
+                ))}
+                </Transition>
             </div>
             <Footer />
         </div>
