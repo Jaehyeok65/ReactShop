@@ -3,7 +3,7 @@ import styles from './List.module.css';
 import { Link } from 'react-router-dom';
 
 
-const ListCard = ({ url , price, name, id }) => {
+const ListCard = ({ url , price, name }) => {
 
     const [toggle, setToggle] = useState(true);
 
