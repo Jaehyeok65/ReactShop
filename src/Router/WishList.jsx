@@ -24,54 +24,46 @@ const transitionStyles = {
 
 
 
-const Cart = ( { user }) => {
+const WishList = ( { user }) => {
 
-    const [total, setTotal] = useState(0);
     const [toggle, setToggle] = useState(false);
-    const [cart, setCart] = useState([]);
+    const [wish, setWish] = useState([]);
 
     useEffect( () => {
         setToggle(prev => !prev);
-        setCart(JSON.parse(window.localStorage.getItem('cart')));
-        setTotal(JSON.parse(window.localStorage.getItem('total')));
+        setWish(JSON.parse(window.localStorage.getItem('wish')));
     },[]);
 
     const onChange = (e) => {
 
-        const array = [...cart];
+        const array = [...wish];
         for(let i in array) {
             if(array[i].name === e.name) {
                 array[i].check = !array[i].check;
             }
         }
-        setCart(array);
+        setWish(array);
     }
 
-    //console.log(cart);
+    console.log(wish);
 
     const onRemove = () => {
 
         const res = window.confirm('선택하신 상품을 삭제하시겠습니까?');
 
         if(res) {
-        const array = cart.filter(item => item.check === false);
-        let price = 0;
-        for(let i in array) {
-            price += parseInt(array[i].price) * 1000;
-        }
+        const array = wish.filter(item => item.check === false);
         
-        window.localStorage.setItem('total',JSON.stringify(price));
-        window.localStorage.setItem('cart',JSON.stringify(array));
-        window.location.href = "/cart";
+        window.localStorage.setItem('wish',JSON.stringify(array));
+        window.location.href = "/wish";
         }
     }
 
     const onRemoveAll = () => {
-        const response = window.confirm('장바구니를 비우시겠습니까? ')
+        const response = window.confirm('관심상품을 비우시겠습니까? ')
         if(response) {
-        window.localStorage.removeItem('cart');
-        window.localStorage.removeItem('total');
-        window.location.href='/cart';
+        window.localStorage.removeItem('wish');
+        window.location.href='/wish';
         }
     }
 
@@ -88,7 +80,8 @@ const Cart = ( { user }) => {
                       { (state) => 
                           (
                      <div style={{...defaultStyle,...transitionStyles[state]}}>
-                        { cart !== null && cart.length !== 0 ? <div>
+                        { wish !== null && wish.length !== 0  ?
+                        <div>
                        <table border = "1px solid gray">
                         <thead>
                         <tr>
@@ -103,7 +96,7 @@ const Cart = ( { user }) => {
                         </tr>
                         </thead>
                         <tbody>
-                            { cart !== null ?  cart.map( (data, index) => (
+                            { wish !== null ?  wish.map( (data, index) => (
                             <tr key={index}>
                                 <td>{<input type='checkbox' name='check' value={data.check} onChange={() => onChange(data)} />}</td>
                                 <td className={styles.imgs}>{<img src={data.url} alt = {data.name} width='110px' height='120px' />}</td>
@@ -117,42 +110,21 @@ const Cart = ( { user }) => {
                         )) : null }
                         </tbody>
                         <tfoot>
-                            <tr>
-                                <td colSpan='9'>
-                                    상품구매금액 {total} + 배송비 0 = 합계 : {total}원 
-                                </td>
-                            </tr>
                         </tfoot>
                     </table>
-                    <div className={styles.tfoots}>
-                    <p style={{ marginLeft : '8px', marginTop : '16px'}}>선택 상품을 <button style={{ background:  'black' , color : 'white', fontSize : '11px' }} onClick={onRemove}>삭제</button></p>
-                    <p><button style={{ background:  'black' , color : 'white', fontSize : '11px'}} onClick = {onRemoveAll}>장바구기 비우기</button><button style={{margin : '4px', background : 'black', color : 'white', fontSize : '11px'}}>견적서 출력</button></p>
+                    <div className={styles.tfoots2}>
+                    <p style={{ marginLeft : '8px', marginTop : '16px'}}><span style={{ fontSize : '12px'}}>선택 상품을</span> <button className={styles.wishbutton} onClick={onRemove}>삭제하기</button>
+                    <button className={styles.wishbutton}>장바구니 담기</button>
+                    </p>
+                    <p style={{marginTop : '16px'}}><button className={styles.wishbutton}>전체상품주문</button><button className={styles.wishbutton} onClick={onRemoveAll}>관심상품 비우기</button></p>
                     </div>
                     <br />
                     <br />
-                    <table border = "1px solid gray" className={styles.secondtable}>
-                        <thead>
-                            <tr>
-                                <th>총 상품금액</th>
-                                <th>총 배송비</th>
-                                <th>결제 예정 금액</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{total}원</td>
-                                <td>+ 0원</td>
-                                <td>= {total}원</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div className={styles.order}>
-                    <button>전체상품주문</button>
-                    <button>선택상품주문</button>
-                    </div>
-                    <br/>
-                    </div> : <div><p style={{marginBottom : '50%', textAlign : 'center', fontSize : '12px', color : 'gray'}}>장바구니가 비어있습니다.</p></div>
-                            }
+                    <br/></div>
+                       : <div>
+                        <hr/>
+                        <p style={{ marginBottom : '45%', textAlign : 'center', fontSize : '12px'}}>관심 상품 내역이 없습니다.</p>
+                       </div> }
                     </div>)
                      }
                      </Transition>
@@ -164,4 +136,4 @@ const Cart = ( { user }) => {
     )
 }
 
-export default Cart;
+export default WishList;

@@ -23,6 +23,15 @@ table th {
     font-weight: 110;
 }
 
+.wishbutton {
+    background: white;
+    padding: 8px 18px;
+    margin-right: 2px;
+    margin-left: 2px;
+    border-color: gray gray;
+    font-size: 13px;
+    height: 100%;
+}
 
 
 .cart {
@@ -55,6 +64,13 @@ td:nth-child(3) {
     display: flex;
     justify-content: space-between;
     font-size: 12px;
+}
+
+.tfoots2 {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 20%;
 }
 
 
@@ -104,5 +120,22 @@ tfoot td {
         margin: 0 auto;
     }
 
+    .tfoots2 {
+
+    }
+
+
+    
+}
+
+@media screen and (max-width : 840px) {
+    .wishbutton {
+        background: white;
+        padding: 4px 8px;
+        margin-right: 2px;
+        margin-left: 2px;
+        border-color: gray gray;
+        font-size: 11px;
+    }
     
 }
