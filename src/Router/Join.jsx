@@ -21,7 +21,7 @@ const transitionStyles = {
   exited:  { opacity: 0 },
 };
 
-function Login( { user }) {
+function Join( { user }) {
     const authService = mybase.auth();
     authService.setPersistence('session');
 
@@ -47,20 +47,15 @@ function Login( { user }) {
     }
 
 
-
     const onSubmit = async(e) => {
         e.preventDefault();
         try {
-                //로그인 성공
-            const data = await authService.signInWithEmailAndPassword(input.email,input.password);
-            if(data) {
-              window.location.href='/';
-            }
+            //계정 생성
+            const data = await authService.createUserWithEmailAndPassword(input.email, input.password);
+            console.log(data);
         }
         catch(error) {
-            //로그인 실패
-            window.alert('아이디 또는 비밀번호가 잘못 되었습니다.');
-
+            console.log(error);
         }
         
         
@@ -76,18 +71,17 @@ function Login( { user }) {
                           (
                      <div style={{...defaultStyle,...transitionStyles[state]}}>
                       <div className={styles.mgbt}>
-                <form onSubmit={onSubmit}>
-                <div className={styles.logincontainer}>
-                  <h2>LOGIN</h2>
-                   <input type='email' name='email' value={input.email} placeholder="email..." onChange={onChange}/>
-                     <input type='password' name='password' value={input.password} placeholder="password..." onChange={onChange} />
-                    <input type='submit' value = {'LOGIN'} />
-                   </div>
-                      <br/>
-                   </form>
-                   </div>
-                   </div>)
-             }
+                      <form onSubmit={onSubmit}>
+                        <div className={styles.logincontainer}>
+                         <h2>JOIN US</h2>
+                         <input type='email' name='email' value={input.email} placeholder="email..." onChange={onChange}/>
+                         <input type='password' name='password' value={input.password} placeholder="password..." onChange={onChange} />
+                         <input type='submit' value = 'JOIN US' />
+                         </div>
+                         <br/>
+                      </form>
+                      </div>
+                      </div>)}
         </Transition>
       </div>
       </div>
@@ -102,4 +96,4 @@ function Login( { user }) {
   );
 }
 
-export default Login;
+export default Join;

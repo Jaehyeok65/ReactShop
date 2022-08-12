@@ -24,7 +24,7 @@ const transitionStyles = {
 
 
 
-const Shop = ( { Goods }) => {
+const Shop = ( { Goods, user }) => {
 
     const [toggle, setToggle] = useState(false);
 
@@ -35,7 +35,7 @@ const Shop = ( { Goods }) => {
     
     return (
                 <div className={styles.body}>
-                    <Nav />
+                    <Nav user={user}/>
                     <div className={styles.sort}>
                     <Category />
                     <Transition in={toggle} timeout={500} appear>

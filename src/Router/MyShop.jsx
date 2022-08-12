@@ -25,7 +25,7 @@ const transitionStyles = {
 
 
 
-const MyPage = () => {
+const MyPage = ( { user }) => {
 
     const [toggle, setToggle] = useState(false);
 
@@ -37,7 +37,7 @@ const MyPage = () => {
     return(
         <>
         <div className={styles.body}>
-            <Nav />
+            <Nav user={user} />
             <div className={styles.sort}>
             <Category />
             <div className={styles.container}>

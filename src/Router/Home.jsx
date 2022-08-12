@@ -25,7 +25,7 @@ const transitionStyles = {
 
 
 
-const Home = ({ Goods } ) => {
+const Home = ({ Goods, user } ) => {
 
     const [toggle, setToggle] = useState(false);
 
@@ -35,7 +35,7 @@ const Home = ({ Goods } ) => {
     
     return (
         <div className={styles.body}>
-        <Nav />
+        <Nav user = {user} />
         <Category />
         <div className={styles.container}>
             <div className={styles.outer}>

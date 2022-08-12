@@ -24,7 +24,7 @@ const transitionStyles = {
 
 
 
-const Cart = () => {
+const Cart = ( { user }) => {
 
     const [total, setTotal] = useState(0);
     const [toggle, setToggle] = useState(false);
@@ -59,6 +59,7 @@ const Cart = () => {
         for(let i in array) {
             price += parseInt(array[i].price) * 1000;
         }
+        
         window.localStorage.setItem('total',JSON.stringify(price));
         window.localStorage.setItem('cart',JSON.stringify(array));
         window.location.href = "/cart";
@@ -79,7 +80,7 @@ const Cart = () => {
 
     return(
             <div className={styles.body}>
-                <Nav />
+                <Nav user={user} />
                 <div className={styles.sort}>
                     <Category />
                     <div className={styles.cart}>
