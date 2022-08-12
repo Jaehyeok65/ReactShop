@@ -30,9 +30,17 @@ const WishList = ( { user }) => {
     const [wish, setWish] = useState([]);
 
     useEffect( () => {
+        userCheck();
         setToggle(prev => !prev);
         setWish(JSON.parse(window.localStorage.getItem('wish')));
     },[]);
+
+    const userCheck = () => {
+        if(user === null) {
+            alert('로그인 후 이용가능합니다.');
+            window.location.href='/login';
+        }
+    }
 
     const onChange = (e) => {
 
@@ -45,7 +53,7 @@ const WishList = ( { user }) => {
         setWish(array);
     }
 
-    console.log(wish);
+    console.log(user);
 
     const onRemove = () => {
 

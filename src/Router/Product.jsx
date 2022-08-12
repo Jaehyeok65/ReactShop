@@ -24,7 +24,7 @@ const transitionStyles = {
 
 
 
-const Product = ( { Goods } ) => {
+const Product = ( { Goods, user } ) => {
 
     const { name }  = useParams();
     const [product, setProduct] = useState(() => 
@@ -43,6 +43,13 @@ const Product = ( { Goods } ) => {
         }
 
         return money;
+    }
+
+    const userCheck = () => { //관심상품에 추가하기 위해 권한이 있는지 확인
+        if(user === null) {
+            alert('로그인 후 이용가능합니다.');
+            window.location.href='/login';
+        }
     }
 
 
@@ -99,6 +106,55 @@ const Product = ( { Goods } ) => {
     }
     }
 
+    const addwish = () => {   //장바구니에 아이템을 추가함
+        
+        if(user === null) {
+            alert('로그인 후 관심상품을 등록하세요');
+            window.location.href='/login';
+            return;
+        }
+        const res = JSON.parse(window.localStorage.getItem('wish')); //장바구니에 동일한 상품이 있는지 확인
+        const resarray = array.concat(res); //find함수를 사용하기 위해 concat을 이용해 배열로 만듬
+        let response = null;
+        if(res !== null) { //res가 null이라면 find함수가 작동하지 않으므로 null이 아닌 경우에만 find함수를 사용
+        response = resarray.find( item => { //장바구니 내역에서 현재 상품과 이름이 같은 아이템을 찾음
+            return item.name === product.name
+        })}
+        if(response !== undefined && response !== null) { //undefined가 아니고 초기값 null이 아니라면 장바구니에 동일한 상품이 있는 것
+            const confirm = window.confirm('관심상품에 동일한 상품이 있습니다. 상품을 추가하시겠습니까?');
+            if(confirm) {
+                alert('관심상품에 등록되었습니다.');
+                return ; //이미 장바구니에 저장이 되어있으므로 return
+            }
+            return;
+        }
+        else {  //undefined이거나 초기값 null이라면 장바구니에 동일한 상품이 없는 것
+
+        const confirm = window.confirm('상품을 관심상품에 추가하시겠습니까?');
+        if(confirm) {
+            const res = JSON.parse(window.localStorage.getItem('wish')); //기존에 장바구니에 있던 상품을 가져옴
+            //console.log(res);
+            if(res !== null) { //기존에 장바구니에 상품이 있다면
+            const wisharray = array.concat(res); //배열을 만들어서 기존에 장바구니에 있던 상품에 현재 상품을 추가
+            const wisharrays = [...wisharray, product];
+            window.localStorage.setItem('wish',JSON.stringify(wisharrays)); //새로 만든 배열을 장바구니에 추가
+            const confirms = window.confirm('관심상품에 추가되었습니다. 관심상품으로 이동하시겠습니까?');
+                if(confirms) {
+                    window.location.href = "/wish";
+                }
+            }
+            else {  //기존에 장바구니에 상품이 없다면
+                const wisharrays = array.concat(product); //map함수를 사용해야하므로 배열형태로 장바구니에 추가
+                window.localStorage.setItem('wish',JSON.stringify(wisharrays)); //현재 상품만 장바구니에 추가
+                const confirms = window.confirm('관심상품에 추가되었습니다. 관심상품으로 이동하시겠습니까?');
+                if(confirms) {
+                    window.location.href = "/wish";
+                }
+            }
+        }
+    }
+    }
+
   
     
 
@@ -124,7 +180,7 @@ const Product = ( { Goods } ) => {
     return (
         <>
         <div className={styles.body}>
-            <Nav />
+            <Nav user={user} />
             <div className={styles.sort}>
             <Category />
             <Transition in={toggle} timeout={500} appear>
@@ -144,7 +200,7 @@ const Product = ( { Goods } ) => {
                          <div className={styles.button}>
                              <button>BUY NOW</button>
                              <button onClick={additem}>ADD CART</button>
-                             <button>WISH LIST</button>
+                             <button onClick={addwish}>WISH LIST</button>
                          </div>
                      </div>
                      <div className={styles.images}>
