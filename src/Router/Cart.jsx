@@ -48,9 +48,51 @@ const Cart = ( { user }) => {
         setCart(array);
     }
 
+    const onCheck = () => {
+        const array = [...cart];
+        for(let i in array) {
+            if(array[i].check === true) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    const onAllbuy = () => {
+        let price = 0;
+        for(let i in cart) {
+            price += parseInt(cart[i].price) * 1000;
+        }
+        window.localStorage.setItem('pay',JSON.stringify(cart));
+        window.localStorage.setItem('paytotal',JSON.stringify(price));
+        window.location.href='/payment';
+    }
+
+    const onSelectbuy = () => {
+        const check = onCheck();
+        if(check) {
+            alert('선택된 상품이 없습니다.');
+            return;
+        }
+        const array = cart.filter(item => item.check === true);
+        let price = 0;
+        for(let i in array) {
+            price += parseInt(array[i].price) * 1000;
+        }
+        window.localStorage.setItem('pay',JSON.stringify(array));
+        window.localStorage.setItem('paytotal',JSON.stringify(price));
+        window.location.href='/payment';
+    }
+
     //console.log(cart);
 
     const onRemove = () => {
+
+        const checks = onCheck();
+        if(checks) {
+            alert('선택된 상품이 없습니다.');
+            return;
+        }
 
         const res = window.confirm('선택하신 상품을 삭제하시겠습니까?');
 
@@ -148,8 +190,8 @@ const Cart = ( { user }) => {
                         </tbody>
                     </table>
                     <div className={styles.order}>
-                    <button>전체상품주문</button>
-                    <button>선택상품주문</button>
+                    <button onClick={onAllbuy}>전체상품주문</button>
+                    <button onClick={onSelectbuy}>선택상품주문</button>
                     </div>
                     <br/>
                     </div> : <div><p style={{marginBottom : '50%', textAlign : 'center', fontSize : '12px', color : 'gray'}}>장바구니가 비어있습니다.</p></div>

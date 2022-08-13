@@ -55,6 +55,7 @@ const Product = ( { Goods, user } ) => {
 
 
 
+
     const additem = () => {   //장바구니에 아이템을 추가함
 
         const res = JSON.parse(window.localStorage.getItem('cart')); //장바구니에 동일한 상품이 있는지 확인
@@ -123,7 +124,11 @@ const Product = ( { Goods, user } ) => {
         if(response !== undefined && response !== null) { //undefined가 아니고 초기값 null이 아니라면 장바구니에 동일한 상품이 있는 것
             const confirm = window.confirm('관심상품에 동일한 상품이 있습니다. 상품을 추가하시겠습니까?');
             if(confirm) {
-                alert('관심상품에 등록되었습니다.');
+                const confirms = window.confirm('관심상품에 등록되었습니다. 관심상품 페이지로 이동하시겠습니까?');
+                if(confirms) {
+                    window.location.href='/wish';
+                    return;
+                }
                 return ; //이미 장바구니에 저장이 되어있으므로 return
             }
             return;
@@ -153,6 +158,18 @@ const Product = ( { Goods, user } ) => {
             }
         }
     }
+    }
+
+    const addbuy = () => {
+        const confirm = window.confirm('상품을 구매하시겠습니까?');
+
+        if(confirm) {
+            let array = [];
+            const response = array.concat(product); //map함수를 사용하므로 배열형식으로 추가.
+            window.localStorage.setItem('pay',JSON.stringify(response));
+            window.localStorage.setItem('paytotal',JSON.stringify(product.price));
+            window.location.href='/payment';
+        }
     }
 
   
@@ -198,7 +215,7 @@ const Product = ( { Goods, user } ) => {
                          <br/>
                          <h5>TOTAL &nbsp;:&nbsp; {product !== null ? product.price : null}원</h5>
                          <div className={styles.button}>
-                             <button>BUY NOW</button>
+                             <button onClick={addbuy}>BUY NOW</button>
                              <button onClick={additem}>ADD CART</button>
                              <button onClick={addwish}>WISH LIST</button>
                          </div>

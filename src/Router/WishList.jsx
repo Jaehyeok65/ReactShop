@@ -46,6 +46,16 @@ const WishList = ( { user }) => {
         }
     }
 
+    const onCheck = () => {
+        const array = [...wish];
+        for(let i in array) {
+            if(array[i].check === true) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     const price = (cartarray) => {
         let money = 0;
         for(let i in cartarray) {
@@ -115,8 +125,25 @@ const WishList = ( { user }) => {
         setWish(array);
     }
 
+    const onAllbuy = () => {
+        let price = 0;
+        for(let i in wish) {
+            price += parseInt(wish[i].price) * 1000;
+        }
+        window.localStorage.setItem('pay',JSON.stringify(wish));
+        window.localStorage.setItem('paytotal',JSON.stringify(price));
+        window.location.href='/payment';
+    }
+
 
     const onRemove = () => {
+
+        const checks = onCheck();
+
+        if(checks) {
+            alert('선택된 상품이 없습니다.');
+            return;
+        }
 
         const res = window.confirm('선택하신 상품을 삭제하시겠습니까?');
 
@@ -185,7 +212,7 @@ const WishList = ( { user }) => {
                     <p style={{ marginLeft : '8px', marginTop : '16px'}}><span style={{ fontSize : '12px'}}>선택 상품을</span> <button className={styles.wishbutton} onClick={onRemove}>삭제하기</button>
                     <button className={styles.wishbutton} onClick={additem}>장바구니 담기</button>
                     </p>
-                    <p style={{marginTop : '16px'}}><button className={styles.wishbutton}>전체상품주문</button><button className={styles.wishbutton} onClick={onRemoveAll}>관심상품 비우기</button></p>
+                    <p style={{marginTop : '16px'}}><button className={styles.wishbutton} onClick={onAllbuy}>전체상품주문</button><button className={styles.wishbutton} onClick={onRemoveAll}>관심상품 비우기</button></p>
                     </div>
                     <br />
                     <br />
