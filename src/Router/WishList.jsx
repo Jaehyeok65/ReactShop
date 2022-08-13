@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import Footer from '../Component/Footer';
 import { Transition } from 'react-transition-group';
+import { Link } from 'react-router-dom';
 
 const duration = 1000;
 
@@ -167,8 +168,8 @@ const WishList = ( { user }) => {
                             { wish !== null ?  wish.map( (data, index) => (
                             <tr key={index}>
                                 <td>{<input type='checkbox' name='check' value={data.check} onChange={() => onChange(data)} />}</td>
-                                <td className={styles.imgs}>{<img src={data.url} alt = {data.name} width='110px' height='120px' />}</td>
-                                <td>{data.name}</td>
+                                <td className={styles.imgs}><Link to={`product/${data.name}`}>{<img src={data.url} alt = {data.name} width='110px' height='120px' />}</Link></td>
+                                <td><Link to={`product/${data.name}`} className={styles.textlink}>{data.name}</Link></td>
                                 <td>{data.price}원</td>
                                 <td>{1}</td>
                                 <td>{0}</td>
