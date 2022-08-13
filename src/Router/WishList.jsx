@@ -28,6 +28,9 @@ const WishList = ( { user }) => {
 
     const [toggle, setToggle] = useState(false);
     const [wish, setWish] = useState([]);
+    const [users, setUsers] = useState(() => 
+        JSON.parse(window.sessionStorage.getItem('user')) || null
+    )
 
     useEffect( () => {
         userCheck();
@@ -36,10 +39,68 @@ const WishList = ( { user }) => {
     },[]);
 
     const userCheck = () => {
-        if(user === null) {
+        if(users === null) {
             alert('로그인 후 이용가능합니다.');
             window.location.href='/login';
         }
+    }
+
+    const price = (cartarray) => {
+        let money = 0;
+        for(let i in cartarray) {
+            money += parseInt(cartarray[i].price) * 1000;
+        }
+
+        return money;
+    }
+
+    //console.log(wish);
+
+
+
+    const additem = () => {   //장바구니에 아이템을 추가함
+        const confirm = window.confirm('해당 상품을 장바구니에 추가하시겠습니까?');
+
+        if(confirm) {
+        let array = []; //concat을 위해 빈 배열 선언
+        const res = JSON.parse(window.localStorage.getItem('cart')); //장바구니에 동일한 상품이 있는지 확인
+        const resarray = array.concat(res); //find함수를 사용하기 위해 concat을 이용해 배열로 만듬
+        let response = []; //장바구니에 중복되지 않는 상품을 담는 배열
+        let checked = []; //체크된 배열을 담는 배열
+        let response2 = [] //장바구니에 중복되는 상품을 담는 배열
+        if(res !== null) {  //장바구니에 상품이 있을 경우 
+            checked = wish.filter( item => item.check === true);
+            for(let i in checked) {
+                for(let j in resarray) {
+                    if(checked[i].name === resarray[j].name) {
+                        response2.push(checked[i]);
+                    }
+                }
+            }
+            for(let i in checked) {
+                if(response2.find(item => item.name === checked[i].name) === undefined) { //중복되는 상품 배열
+                    response.push(checked[i]);
+                }
+            }
+
+            response = response.concat(resarray);
+        }
+        else if(res === null) {
+            response = wish.filter( item => item.check === true); //장바구니에 상품이 없을 경우 wishlist에 체크된 상품만 장바구니에 추가
+        }
+        const total = price(response);
+
+        window.localStorage.setItem('cart',JSON.stringify(response)); //새로운 response를 cart 장바구니에 저장.
+        window.localStorage.setItem('total',JSON.stringify(total));
+
+        const confirms = window.confirm('장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?');
+
+        if(confirms) {
+            window.location.href='/cart';
+        }
+    }
+       
+
     }
 
     const onChange = (e) => {
@@ -53,7 +114,6 @@ const WishList = ( { user }) => {
         setWish(array);
     }
 
-    console.log(user);
 
     const onRemove = () => {
 
@@ -122,7 +182,7 @@ const WishList = ( { user }) => {
                     </table>
                     <div className={styles.tfoots2}>
                     <p style={{ marginLeft : '8px', marginTop : '16px'}}><span style={{ fontSize : '12px'}}>선택 상품을</span> <button className={styles.wishbutton} onClick={onRemove}>삭제하기</button>
-                    <button className={styles.wishbutton}>장바구니 담기</button>
+                    <button className={styles.wishbutton} onClick={additem}>장바구니 담기</button>
                     </p>
                     <p style={{marginTop : '16px'}}><button className={styles.wishbutton}>전체상품주문</button><button className={styles.wishbutton} onClick={onRemoveAll}>관심상품 비우기</button></p>
                     </div>
