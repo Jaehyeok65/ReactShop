@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../Component/Footer';
 import Kakao from '../Component/Kakao';
 import Toss from '../Component/Toss';
+import Shipinfo from '../Component/Shipinfo';
 
 const duration = 1000;
 
@@ -152,9 +153,31 @@ const Payment = () => {
             </div>
             <br />
             <br />
+            <Shipinfo />
+            <h4 style={{marginTop : '7%', fontSize : '12px'}}>결제 예정 금액</h4>
+                <table border='1' className={styles.paytable}>
+                    <tr>
+                        <th>총 주문 금액</th>
+                        <th>총 할인 + 부가 결제 금액</th>
+                        <th>총 결제 금액</th>
+                    </tr>
+                    <tr>
+                        <td>{paytotal}</td>
+                        <td>0</td>
+                        <td>={paytotal}</td>
+                    </tr>
+                    <tr>
+                        <td>총 할인 금액</td>
+                        <td colSpan={2}>0원</td>
+                    </tr>
+                    <tr>
+                        <td>총 부가 결제 금액</td>
+                        <td>0원</td>
+                    </tr>
+                </table>
             <div className={styles.order}>
-            <Kakao />
-            <Toss />
+            <Kakao pay={paytotal} />
+            <Toss pay={paytotal} />
             </div>
             <br/>
             </div> : <div><p style={{marginBottom : '50%', textAlign : 'center', fontSize : '12px', color : 'gray'}}>결제항목이 비어있습니다.</p></div>
