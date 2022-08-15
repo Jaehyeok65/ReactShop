@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Nav from '../Component/Nav';
 import Category from '../Component/Category';
 import styles from '../Component/Cart.module.css'
@@ -37,10 +37,20 @@ const Payment = () => {
         name : '',  //주문자 이름
         postcode : '', //우편 번호
         address : '',  //배송 주소
-        phone : { first : '', second : '', third : ''}, //주문자 핸드폰
+        phone : { first : '010', second : '', third : ''}, //주문자 핸드폰
         email : { first : '', second : ''}, //주문자 이메일
         message : '' //요청사항 (필수x)
     });
+
+    const nameInput = useRef();
+    const postcodeInput = useRef();
+    const addressInput = useRef();
+    const firstphoneInput = useRef();
+    const secondphoneInput = useRef();
+    const thirdphoneInput = useRef();
+    const firstemailInput = useRef();
+    const secondemailInput = useRef();
+
 
 
     useEffect( () => {
@@ -110,9 +120,44 @@ const Payment = () => {
 
     const onTest = () => {
         if(ship.name === '') {
-            alert('수령자 이름을 입력해주세요');
+            alert('수령자 이름을 입력해주세요.');
+            nameInput.current.focus();
             return false;
         }
+        else if(ship.postcode === '') {
+            alert('우편번호를 입력해주세요.');
+            postcodeInput.current.focus();
+            return false;
+        }
+        else if(ship.address === '') {
+            alert('상세주소를 입력해주세요.');
+            addressInput.current.focus();
+            return false;
+        }
+        else if(ship.phone.first === '' || ship.phone.second === '' || ship.phone.third === '') {
+            alert('전화번호를 입력해주세요.');
+            if(ship.phone.first === '') {
+                firstphoneInput.current.focus();
+            }
+            else if(ship.phone.second === '') {
+                secondphoneInput.current.focus();
+            }
+            else if(ship.phone.third === '') {
+                thirdphoneInput.current.focus();
+            }
+            return false;
+        }
+        else if(ship.email.first === '' || ship.email.second === '') {
+            alert('이메일을 입력해주세요.');
+            if(ship.email.first === '') {
+                firstemailInput.current.focus();
+            }
+            else if(ship.email.second === '') {
+                secondemailInput.current.focus();
+            }
+            return false;
+        }
+        return true;
     }
 
     
@@ -170,7 +215,10 @@ const Payment = () => {
             </div>
             <br />
             <br />
-            <Shipinfo ship={ship} setShip={setShip} />
+            <Shipinfo ship={ship} setShip={setShip} nameInput={nameInput} addressInput={addressInput} 
+                firstphoneInput={firstphoneInput} secondphoneInput={secondphoneInput} postcodeInput={postcodeInput}
+                thirdphoneInput={thirdphoneInput} firstemailInput={firstemailInput} secondemailInput={secondemailInput}
+                />
             <h4 style={{marginTop : '7%', fontSize : '12px'}}>결제 예정 금액</h4>
                 <table border='1' className={styles.paytable}>
                     <tr>
@@ -194,7 +242,8 @@ const Payment = () => {
                         <td>0원</td>
                     </tr>
                 </table>
-                <Paymentway paytotal={paytotal} pay={pay} onTest={onTest} />
+                <Paymentway paytotal={paytotal} pay={pay} onTest={onTest}
+                />
             <br/>
             </div> : <div><p style={{marginBottom : '50%', textAlign : 'center', fontSize : '12px', color : 'gray'}}>결제항목이 비어있습니다.</p></div>
                     }

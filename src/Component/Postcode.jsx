@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 
-const Postcode = ( { ship, setShip }) => {
+const Postcode = ( { ship, setShip, postcodeInput }) => {
 
 
   const open = useDaumPostcodePopup();
@@ -34,7 +34,7 @@ const Postcode = ( { ship, setShip }) => {
   };
 
   return (
-    <button type='button' onClick={handleClick} style={{border : 'none', background : 'white', fontSize : '12px'}}>
+    <button type='button' onClick={handleClick} style={{border : 'none', background : 'white', fontSize : '12px'}} ref={postcodeInput}>
       우편번호 찾기
     </button>
   );

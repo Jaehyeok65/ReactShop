@@ -3,7 +3,7 @@ import Postcode from './Postcode';
 
 
 
-const Shipinfo = ( { ship, setShip}) => {
+const Shipinfo = ( { ship, setShip, nameInput, addressInput, firstphoneInput, secondphoneInput, thirdphoneInput, firstemailInput, secondemailInput ,postcodeInput }) => {
 
 
     /*const [ship, setShip] = useState({
@@ -66,12 +66,12 @@ const Shipinfo = ( { ship, setShip}) => {
             <h4>SHIPPING INFO</h4>
             <hr />
             <form onSubmit={onSubmit}>
-                <p><span style={{fontSize : '12px', marginRight :'55px'}}>받으시는 분</span><input name='name' value={ship.name} placeholder='이름을 입력하세요...' onChange={onChange} required /></p>
-                <p><span style={{fontSize : '12px', marginRight : '90px'}}>주소</span> <input name='postcode' value={ship.postcode} placeholder='우편번호 찾기 >>>' onChange={onChange} style={{ width : '200px'}} disabled required/>
-                <Postcode ship = {ship} setShip={setShip} /></p>
-                <p><input name='address' value={ship.address} placeholder='상세 주소를 입력하세요...' onChange={onChange} style={{marginLeft : '118px', width : '330px'}} required /></p>
+                <p><span style={{fontSize : '12px', marginRight :'55px'}}>받으시는 분</span><input name='name' value={ship.name} placeholder='이름을 입력하세요...' onChange={onChange} ref={nameInput} /></p>
+                <p><span style={{fontSize : '12px', marginRight : '90px'}}>주소</span> <input name='postcode' value={ship.postcode} placeholder='우편번호 찾기 >>>' onChange={onChange} style={{ width : '200px'}} disabled />
+                <Postcode ship = {ship} setShip={setShip} postcodeInput={postcodeInput} /></p>
+                <p><input name='address' value={ship.address} placeholder='상세 주소를 입력하세요...' onChange={onChange} style={{marginLeft : '118px', width : '330px'}} ref={addressInput} /></p>
                 <p> <span style={{fontSize : '12px', marginRight : '70px'}}>휴대전화</span> 
-                    <select onChange={phoneChange} name='first' value={ship.phone.first} style={{height : '22px'}}>
+                    <select onChange={phoneChange} name='first' value={ship.phone.first} style={{height : '22px'}} ref={firstphoneInput}>
                         <option value='010'>010</option>
                         <option value='011'>011</option>
                         <option value='016'>016</option>
@@ -79,10 +79,10 @@ const Shipinfo = ( { ship, setShip}) => {
                         <option value='018'>018</option>
                         <option value='019'>019</option>
                     </select>&nbsp;
-                     - <input type='tel' name ='second' value={ship.phone.second} onChange={phoneChange} style={{width : '80px', height : '15px'}} /> - <input type='tel' name='third' value={ship.phone.third} onChange={phoneChange} style={{width : '80px' ,height :'15px'}}/> 
+                     - <input type='tel' name ='second' value={ship.phone.second} onChange={phoneChange} style={{width : '80px', height : '15px'}} ref={secondphoneInput} /> - <input type='tel' name='third' value={ship.phone.third} onChange={phoneChange} style={{width : '80px' ,height :'15px'}} ref={thirdphoneInput} /> 
                 </p>
-                <p><span style={{fontSize : '12px', marginRight : '82px'}}>이메일</span><input type='email' name='first' value={ship.email.first} onChange={emailChange} />@<input type='email' name='second' value={ship.email.second} disabled/>
-                <select name='second' onChange={emailChange}>
+                <p><span style={{fontSize : '12px', marginRight : '82px'}}>이메일</span><input type='email' name='first' value={ship.email.first} onChange={emailChange} ref={firstemailInput} />@<input type='email' name='second' value={ship.email.second} disabled/>
+                <select name='second' onChange={emailChange} ref={secondemailInput}>
                     <option value=''>이메일을 선택하세요</option>
                     <option value='naver.com'>naver.com</option>
                     <option value='gmail.com'>gmail.com</option>
