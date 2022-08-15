@@ -8,6 +8,7 @@ import Footer from '../Component/Footer';
 import Kakao from '../Component/Kakao';
 import Toss from '../Component/Toss';
 import Shipinfo from '../Component/Shipinfo';
+import Paymentway from '../Component/Paymentway';
 
 const duration = 1000;
 
@@ -31,6 +32,15 @@ const Payment = () => {
     const [user, setUser] = useState(() => JSON.parse(window.sessionStorage.getItem('user')) || null); //세션스토리지에서 유저 정보를 가져옴
     const [toggle, setToggle] = useState(false);
     const [paytotal, setPaytotal] = useState(() => JSON.parse(window.localStorage.getItem('paytotal')) || null);
+    
+    const [ship, setShip] = useState({
+        name : '',  //주문자 이름
+        postcode : '', //우편 번호
+        address : '',  //배송 주소
+        phone : { first : '', second : '', third : ''}, //주문자 핸드폰
+        email : { first : '', second : ''}, //주문자 이메일
+        message : '' //요청사항 (필수x)
+    });
 
 
     useEffect( () => {
@@ -98,6 +108,13 @@ const Payment = () => {
         }
     }
 
+    const onTest = () => {
+        if(ship.name === '') {
+            alert('수령자 이름을 입력해주세요');
+            return false;
+        }
+    }
+
     
     
 
@@ -153,7 +170,7 @@ const Payment = () => {
             </div>
             <br />
             <br />
-            <Shipinfo />
+            <Shipinfo ship={ship} setShip={setShip} />
             <h4 style={{marginTop : '7%', fontSize : '12px'}}>결제 예정 금액</h4>
                 <table border='1' className={styles.paytable}>
                     <tr>
@@ -166,6 +183,8 @@ const Payment = () => {
                         <td>0</td>
                         <td>={paytotal}</td>
                     </tr>
+                </table>
+                <table border='1' className={styles.paytable2}>
                     <tr>
                         <td>총 할인 금액</td>
                         <td colSpan={2}>0원</td>
@@ -175,10 +194,7 @@ const Payment = () => {
                         <td>0원</td>
                     </tr>
                 </table>
-            <div className={styles.order}>
-            <Kakao pay={paytotal} />
-            <Toss pay={paytotal} />
-            </div>
+                <Paymentway paytotal={paytotal} pay={pay} onTest={onTest} />
             <br/>
             </div> : <div><p style={{marginBottom : '50%', textAlign : 'center', fontSize : '12px', color : 'gray'}}>결제항목이 비어있습니다.</p></div>
                     }

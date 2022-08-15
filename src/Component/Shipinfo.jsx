@@ -1,20 +1,19 @@
 import React from 'react';
-import { useState } from 'react';
 import Postcode from './Postcode';
 
 
 
-const Shipinfo = () => {
+const Shipinfo = ( { ship, setShip}) => {
 
 
-    const [ship, setShip] = useState({
+    /*const [ship, setShip] = useState({
         name : '',  //주문자 이름
         postcode : '', //우편 번호
         address : '',  //배송 주소
         phone : { first : '', second : '', third : ''}, //주문자 핸드폰
         email : { first : '', second : ''}, //주문자 이메일
         message : '' //요청사항 (필수x)
-    });
+    });*/
 
 
     const phoneChange = (e) => {
@@ -68,7 +67,7 @@ const Shipinfo = () => {
             <hr />
             <form onSubmit={onSubmit}>
                 <p><span style={{fontSize : '12px', marginRight :'55px'}}>받으시는 분</span><input name='name' value={ship.name} placeholder='이름을 입력하세요...' onChange={onChange} required /></p>
-                <p><span style={{fontSize : '12px', marginRight : '90px'}}>주소</span> <input name='postcode' value={ship.postcode} placeholder='우편번호를 입력하세요...' onChange={onChange} style={{ width : '200px'}}  required/>
+                <p><span style={{fontSize : '12px', marginRight : '90px'}}>주소</span> <input name='postcode' value={ship.postcode} placeholder='우편번호 찾기 >>>' onChange={onChange} style={{ width : '200px'}} disabled required/>
                 <Postcode ship = {ship} setShip={setShip} /></p>
                 <p><input name='address' value={ship.address} placeholder='상세 주소를 입력하세요...' onChange={onChange} style={{marginLeft : '118px', width : '330px'}} required /></p>
                 <p> <span style={{fontSize : '12px', marginRight : '70px'}}>휴대전화</span> 
@@ -84,6 +83,7 @@ const Shipinfo = () => {
                 </p>
                 <p><span style={{fontSize : '12px', marginRight : '82px'}}>이메일</span><input type='email' name='first' value={ship.email.first} onChange={emailChange} />@<input type='email' name='second' value={ship.email.second} disabled/>
                 <select name='second' onChange={emailChange}>
+                    <option value=''>이메일을 선택하세요</option>
                     <option value='naver.com'>naver.com</option>
                     <option value='gmail.com'>gmail.com</option>
                     <option value='daum.net'>daum.net</option>

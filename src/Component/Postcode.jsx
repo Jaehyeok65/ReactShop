@@ -34,8 +34,8 @@ const Postcode = ( { ship, setShip }) => {
   };
 
   return (
-    <button type='button' onClick={handleClick}>
-      Open
+    <button type='button' onClick={handleClick} style={{border : 'none', background : 'white', fontSize : '12px'}}>
+      우편번호 찾기
     </button>
   );
 };
