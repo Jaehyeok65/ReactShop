@@ -9,6 +9,8 @@ import Kakao from '../Component/Kakao';
 import Toss from '../Component/Toss';
 import Shipinfo from '../Component/Shipinfo';
 import Paymentway from '../Component/Paymentway';
+import { dbService } from '../mybase';
+
 
 const duration = 1000;
 
@@ -160,6 +162,16 @@ const Payment = () => {
         return true;
     }
 
+    //console.log(user);
+
+    const onSubmit = async() => {
+        const response = { ...ship,
+        item : pay,
+        uid : user.uid
+        };
+        await dbService.collection('shipping').add(response);
+    }
+
     
     
 
@@ -242,8 +254,7 @@ const Payment = () => {
                         <td>0원</td>
                     </tr>
                 </table>
-                <Paymentway paytotal={paytotal} pay={pay} onTest={onTest}
-                />
+                <Paymentway paytotal={paytotal} pay={pay} onTest={onTest} onSubmit={onSubmit}   />
             <br/>
             </div> : <div><p style={{marginBottom : '50%', textAlign : 'center', fontSize : '12px', color : 'gray'}}>결제항목이 비어있습니다.</p></div>
                     }
