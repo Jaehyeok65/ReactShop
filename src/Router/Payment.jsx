@@ -5,8 +5,6 @@ import styles from '../Component/Cart.module.css'
 import { Transition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
 import Footer from '../Component/Footer';
-import Kakao from '../Component/Kakao';
-import Toss from '../Component/Toss';
 import Shipinfo from '../Component/Shipinfo';
 import Paymentway from '../Component/Paymentway';
 import { dbService } from '../mybase';
@@ -164,12 +162,39 @@ const Payment = () => {
 
     //console.log(user);
 
+    const Formatting = (source, delimiter = '-') => {
+        const year = source.getFullYear();
+        const month = (source.getMonth() + 1);
+        const day = (source.getDate());
+    
+        return [year, month, day].join(delimiter);
+    }
+
     const onSubmit = async() => {
-        const response = { ...ship,
+
+        const today = Formatting(new Date());
+
+        const res = { //데이터베이스에 전달될 데이터 구조 갱신
+            name : ship.name,
+            address : ship.postcode + ship.address,
+            phone : `${ship.phone.first}-${ship.phone.second}-${ship.phone.third}`,
+            email : `${ship.email.first}@${ship.email.second}`,
+            totalprice : paytotal,
+            date : today    
+        }
+        const response = { ...res,
         item : pay,
-        uid : user.uid
+        uid : user.uid,
+        useremail : user.email
         };
-        await dbService.collection('shipping').add(response);
+        const data = await dbService.collection('shipping').add(response);
+
+        if(data) {
+            alert('결제가 완료되었습니다.');
+            window.location.href='/';
+        }
+
+        
     }
 
     
@@ -239,9 +264,9 @@ const Payment = () => {
                         <th>총 결제 금액</th>
                     </tr>
                     <tr>
-                        <td>{paytotal}</td>
-                        <td>0</td>
-                        <td>={paytotal}</td>
+                        <td style={{fontWeight : 'bold', fontSize : '16px'}}>{paytotal}원</td>
+                        <td style={{fontWeight : 'bold', fontSize : '16PX'}}>0원</td>
+                        <td style={{fontWeight : 'bold' , fontSize : '16px'}}>= {paytotal}원</td>
                     </tr>
                 </table>
                 <table border='1' className={styles.paytable2}>
@@ -254,7 +279,7 @@ const Payment = () => {
                         <td>0원</td>
                     </tr>
                 </table>
-                <Paymentway paytotal={paytotal} pay={pay} onTest={onTest} onSubmit={onSubmit}   />
+                <Paymentway paytotal={paytotal} onTest={onTest} onSubmit={onSubmit}   />
             <br/>
             </div> : <div><p style={{marginBottom : '50%', textAlign : 'center', fontSize : '12px', color : 'gray'}}>결제항목이 비어있습니다.</p></div>
                     }
