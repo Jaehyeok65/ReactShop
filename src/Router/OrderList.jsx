@@ -5,8 +5,6 @@ import Nav from '../Component/Nav';
 import Category from '../Component/Category';
 import styles from '../Component/Orderlist.module.css';
 import Footer from '../Component/Footer';
-import { click } from '@testing-library/user-event/dist/click';
-import { FaBorderNone } from 'react-icons/fa';
 
 
 const duration = 1000;
@@ -52,21 +50,35 @@ const OrderList = () => {
 
     useEffect(() => {
         userCheck();
-        getShipping();
         setToggle(prev => !prev);
-        
+        initDate();
     }, [])
 
 
     const Formatting = (source, delimiter = '-') => {
         const year = source.getFullYear();
-        const month = (source.getMonth() + 1);
+        let month = (source.getMonth() + 1);
+        if(parseInt(month) < 10 && parseInt(month) > 0) {
+            month = '0' + month;
+        }
         const day = (source.getDate());
     
         return [year, month, day].join(delimiter);
     }
 
-    const dft = Formatting(new Date());
+    const initDate = () => {
+        const first = Formatting(new Date());
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = (today.getMonth() + 3);
+        const day = today.getDate();
+        const second = Formatting(new Date(year,month,day));
+        setDate( {
+            firstDate : first,
+            secondDate : second
+        })
+    }
+
 
     
 
@@ -81,11 +93,15 @@ const OrderList = () => {
 
 
     const getShipping = async() => {
-        const data = await dbService.collection('shipping').where('uid','==', users.uid).where('email','==','www123@naver.com').get();
+        setOrder([]); //조회를 눌렀을 때 이전 데이터가 중복 되는 것을 방지하기 위해 orderlist를 비우고 data를 받아옴.
+        const data = await dbService.collection('shipping').where('uid','==', users.uid).where('date','>=', date.firstDate).where('date','<=',date.secondDate).get();
         data.forEach( item => {
             setOrder( prev => [...prev, item.data()]);
         })
     }
+
+
+    
 
     const userCheck = () => {
         if(users === null) {
@@ -100,6 +116,13 @@ const OrderList = () => {
 
     const onBtnClick2 = () => {
         setBtnstate(false);
+    }
+
+    const ordercheck = () => {
+        if(order.length > 0) {
+            console.log(order[0].date >= date.firstDate);
+            //console.log(date.firstDate);
+        }
     }
 
 
@@ -119,7 +142,8 @@ const OrderList = () => {
                 <div style={{...defaultStyle,...transitionStyles[state]}}>
                     <p><button style={ btnstate ? btn : btn1 } onClick={onBtnClick1}>주문내역조회</button><span style={{marginRight : '32px'}}></span><button style={ btnstate ? btn1 : btn} onClick={onBtnClick2}>취소/반품/교환 내역</button></p>
                     <p className={styles.date}><input type='date' name='firstDate' value={date.firstDate} onChange={onChange} /> ~ <input type='date' name='secondDate' value={date.secondDate} onChange={onChange}/>
-                    <button className={styles.btn}>조회</button>
+                    <button className={styles.btn} onClick={getShipping}>조회</button>
+                    <button onClick={ordercheck}>확인</button>
                     </p>
                     <ul className={styles.list}>
                         <li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li>
@@ -141,7 +165,7 @@ const OrderList = () => {
                              order.map((item, index) => (
                                 item.item.map((items) => (
                                     <tr>
-                                        <td>2022-08-16</td>
+                                        <td key = {index}>{items.date}<br/>[{items.orderid}]</td>
                                         <td><img src={items.url} alt={items.name} width='110px' height='120px' /></td>
                                         <td>{items.name}</td>
                                         <td>1</td>
