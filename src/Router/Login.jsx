@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import mybase from "../mybase";
 import styles from '../Component/Login.module.css'
 import Nav from '../Component/Nav';
@@ -27,6 +27,7 @@ function Login( { user }) {
 
     //const [email, setEmail] = useState(null);
     //const [password, setPassword] = useState(null);
+    const scrollref = useRef();
     const [input, setInput] = useState({
         email : '',
         password : ''
@@ -35,7 +36,9 @@ function Login( { user }) {
 
     useEffect( () => {
         setToggle(prev => !prev);
+        scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     }, [])
+
 
 
     const onChange = (e) => {
@@ -54,7 +57,11 @@ function Login( { user }) {
                 //로그인 성공
             const data = await authService.signInWithEmailAndPassword(input.email,input.password);
             if(data) {
-              window.location.href='/';
+              const uid = data.user.uid;
+              const response = {...input, uid}
+              window.sessionStorage.setItem('user',JSON.stringify(response));
+              window.history.back(); //이전 페이지로 리디렉션함.
+              //window.location.href='/';
             }
         }
         catch(error) {
@@ -66,7 +73,7 @@ function Login( { user }) {
         
     }
   return (
-    <div className={styles.body}>
+    <div className={styles.body} ref={scrollref}>
         <Nav user={user} />
         <div className={styles.sort}>
         <Category />

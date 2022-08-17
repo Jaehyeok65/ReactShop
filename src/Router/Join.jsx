@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import mybase from "../mybase";
 import styles from '../Component/Login.module.css'
 import Nav from '../Component/Nav';
@@ -27,6 +27,7 @@ function Join( { user }) {
 
     //const [email, setEmail] = useState(null);
     //const [password, setPassword] = useState(null);
+    const scrollref = useRef();
     const [input, setInput] = useState({
         email : '',
         password : ''
@@ -35,6 +36,7 @@ function Join( { user }) {
 
     useEffect( () => {
         setToggle(prev => !prev);
+        scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     }, [])
 
 
@@ -51,17 +53,16 @@ function Join( { user }) {
         e.preventDefault();
         try {
             //계정 생성
-            const data = await authService.createUserWithEmailAndPassword(input.email, input.password);
-            console.log(data);
+            await authService.createUserWithEmailAndPassword(input.email, input.password);
         }
         catch(error) {
-            console.log(error);
+            alert(error);
         }
         
         
     }
   return (
-    <div className={styles.body}>
+    <div className={styles.body} ref={scrollref}>
         <Nav user={user} />
         <div className={styles.sort}>
         <Category />

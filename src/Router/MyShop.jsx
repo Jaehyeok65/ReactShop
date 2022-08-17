@@ -5,7 +5,8 @@ import Footer from '../Component/Footer';
 import styles from '../Component/MyShop.module.css'
 import { Transition } from 'react-transition-group';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 
 const duration = 1000;
@@ -28,15 +29,17 @@ const transitionStyles = {
 const MyPage = ( { user }) => {
 
     const [toggle, setToggle] = useState(false);
+    const scrollref = useRef();
 
     useEffect( () => {
         setToggle(prev => !prev);
+        scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     }, [])
 
 
     return(
         <>
-        <div className={styles.body}>
+        <div className={styles.body} ref={scrollref}>
             <Nav user={user} />
             <div className={styles.sort}>
             <Category />
@@ -49,8 +52,8 @@ const MyPage = ( { user }) => {
                 <br/>
                 <div className={styles.gridcontainer}>
                     <button>Profile 회원 정보</button>
-                    <button>ORDER 주문내역 조회</button>
-                    <button>WishList 관심 상품</button>
+                    <button><Link to='/order' className={styles.textlink}>ORDER 주문내역 조회</Link></button>
+                    <button><Link to='/wish' className={styles.textlink}>WishList 관심 상품</Link></button>
                     <button>Mileage 적립금</button>
                     <button>Coupon 쿠폰</button>
                     <button>Board 게시물 관리</button>

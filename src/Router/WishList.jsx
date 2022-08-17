@@ -3,7 +3,7 @@ import Category from '../Component/Category';
 import Nav from '../Component/Nav';
 import styles from '../Component/Cart.module.css'
 import { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Footer from '../Component/Footer';
 import { Transition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
@@ -32,11 +32,13 @@ const WishList = ( { user }) => {
     const [users, setUsers] = useState(() => 
         JSON.parse(window.sessionStorage.getItem('user')) || null
     )
+    const scrollref = useRef();
 
     useEffect( () => {
         userCheck();
         setToggle(prev => !prev);
         setWish(JSON.parse(window.localStorage.getItem('wish')));
+        scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     },[]);
 
     const userCheck = () => {
@@ -167,7 +169,7 @@ const WishList = ( { user }) => {
 
 
     return(
-            <div className={styles.body}>
+            <div className={styles.body} ref={scrollref}>
                 <Nav user={user} />
                 <div className={styles.sort}>
                     <Category />

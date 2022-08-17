@@ -3,7 +3,7 @@ import styles from '../Component/Home.module.css'
 import Nav from '../Component/Nav';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Category from '../Component/Category';
 import Footer from '../Component/Footer';
 import { Transition } from 'react-transition-group';
@@ -32,8 +32,16 @@ const Product = ( { Goods, user } ) => {
     );
     const [toggle, setToggle] = useState(false);
     const [array,setArray] = useState([]);
+    const scrollref = useRef();
     //console.log(name);
     //console.log(Goods);
+
+    useEffect( () => {
+        find();
+        setToggle(prev => !prev);
+        scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+        //window.localStorage.setItem("product",JSON.stringify(product));
+    },[])
 
     
     const price = (cartarray) => {
@@ -185,18 +193,14 @@ const Product = ( { Goods, user } ) => {
         }
     }
     
-    useEffect( () => {
-        find();
-        setToggle(prev => !prev);
-        //window.localStorage.setItem("product",JSON.stringify(product));
-    },[])
+   
 
     //console.log(product);
 
     
     return (
         <>
-        <div className={styles.body}>
+        <div className={styles.body} ref={scrollref}>
             <Nav user={user} />
             <div className={styles.sort}>
             <Category />

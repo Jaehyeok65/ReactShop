@@ -43,6 +43,7 @@ const Payment = () => {
         message : '' //요청사항 (필수x)
     });
 
+    const scrollref = useRef();
     const nameInput = useRef();
     const postcodeInput = useRef();
     const addressInput = useRef();
@@ -60,6 +61,7 @@ const Payment = () => {
             window.location.href = '/login';
         }
         onToggle();
+        scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     },[])
 
     const onToggle = () => {

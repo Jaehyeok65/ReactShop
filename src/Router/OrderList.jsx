@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { dbService } from '../mybase';
 import { Transition } from 'react-transition-group';
 import Nav from '../Component/Nav';
@@ -37,6 +37,8 @@ const btn1 = {
 
 const OrderList = () => {
 
+
+    const scrollref = useRef();
     const [order, setOrder] = useState([]); //주문 내역을 확인
     const [users, setUsers] = useState(() => 
         JSON.parse(window.sessionStorage.getItem('user')) || null
@@ -52,6 +54,7 @@ const OrderList = () => {
         userCheck();
         setToggle(prev => !prev);
         initDate();
+        scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     }, [])
 
 
@@ -132,7 +135,7 @@ const OrderList = () => {
     
 
     return (
-        <div className={styles.body}>
+        <div className={styles.body} ref={scrollref}>
             <Nav />
             <div className={styles.sort}>
             <Category />
@@ -153,7 +156,7 @@ const OrderList = () => {
                     <h4>주문 상품 정보</h4>
                     <table border='1px solid gray' className={styles.ordertable}>
                         <tr>
-                            <th>주문일자[주문번호]</th>
+                            <th>주문일자<br/>[주문번호]</th>
                             <th>이미지</th>
                             <th>상품 정보</th>
                             <th>수량</th>

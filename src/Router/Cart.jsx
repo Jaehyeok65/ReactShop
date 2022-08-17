@@ -2,7 +2,7 @@ import React from 'react';
 import Category from '../Component/Category';
 import Nav from '../Component/Nav';
 import styles from '../Component/Cart.module.css'
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import Footer from '../Component/Footer';
 import { Transition } from 'react-transition-group';
@@ -27,6 +27,8 @@ const transitionStyles = {
 
 const Cart = ( { user }) => {
 
+
+    const scrollref = useRef();
     const [total, setTotal] = useState(0);
     const [toggle, setToggle] = useState(false);
     const [cart, setCart] = useState([]);
@@ -35,6 +37,7 @@ const Cart = ( { user }) => {
         setToggle(prev => !prev);
         setCart(JSON.parse(window.localStorage.getItem('cart')));
         setTotal(JSON.parse(window.localStorage.getItem('total')));
+        scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     },[]);
 
     const onChange = (e) => {
@@ -122,7 +125,7 @@ const Cart = ( { user }) => {
 
 
     return(
-            <div className={styles.body}>
+            <div className={styles.body} ref={scrollref}>
                 <Nav user={user} />
                 <div className={styles.sort}>
                     <Category />
@@ -131,8 +134,9 @@ const Cart = ( { user }) => {
                       { (state) => 
                           (
                      <div style={{...defaultStyle,...transitionStyles[state]}}>
-                        { cart !== null && cart.length !== 0 ? <div>
-                       <table border = "1px solid gray">
+                        { cart !== null && cart.length !== 0 ? 
+                        <div>
+                        <table border = "1px solid gray">
                         <thead>
                         <tr>
                             <th></th>
