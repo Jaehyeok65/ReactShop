@@ -11,10 +11,15 @@ const Nav = ( { user }) => {
     const authService = mybase.auth();
     authService.setPersistence('session');
 
+    const [users, setUsers] = useState(()=>
+    JSON.parse(window.sessionStorage.getItem('user')) || null
+    )
+
     const onLogout = () => {
         const confirm = window.confirm('로그아웃을 하시겠습니까?');
         if(confirm) {
             authService.signOut();
+            window.sessionStorage.removeItem('user');
             window.location.href='/'; //로그아웃 후 홈으로 이동
         }
     }
@@ -32,11 +37,12 @@ const Nav = ( { user }) => {
                 <div className={styles.item}><Link to ='/'><RiHeading color='black' size='24px' /></Link></div>
             </div>
             <div className={styles.list2}>
+            <div className={styles.items}>{ users ? null : <Link to='/join' className={styles.textlink}>JOIN</Link> }</div>
+                <div className={styles.items}>{ users ? <button className={styles.logout} onClick={onLogout}>LOGOUT</button> : <Link to='/login' className={styles.textlink}>LOGIN</Link> }</div>
                 <div className={styles.items}><Link to='/shop' className={styles.textlink}>SHOP</Link></div>
-                <div className={styles.items}>{ user ? <button className={styles.logout} onClick={onLogout}>LOGOUT</button> : <Link to='/login' className={styles.textlink}>LOGIN</Link> }</div>
-                <div className={styles.items}><Link to='/join' className={styles.textlink}>JOIN</Link></div>
                 <div className={styles.items}><Link to='/cart' className={styles.textlink}>CART</Link></div>
                 <div className={styles.items}><Link to='/myshop' className={styles.textlink}>MYSHOP</Link></div>
+                <div className={styles.items}><Link to='/wish' className={styles.textlink}>WISHLIST</Link></div>
             </div>
         </div>
         </div>
