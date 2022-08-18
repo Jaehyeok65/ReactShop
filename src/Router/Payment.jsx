@@ -217,7 +217,7 @@ const Payment = () => {
     
 
     return (
-        <div className={styles.body}>
+        <div className={styles.body} ref={scrollref}>
         <Nav user={user} />
         <div className={styles.sort}>
             <Category />
@@ -275,14 +275,14 @@ const Payment = () => {
             <h4 style={{marginTop : '7%', fontSize : '12px'}}>결제 예정 금액</h4>
                 <table border='1' className={styles.paytable}>
                     <tr>
-                        <th>총 주문 금액</th>
-                        <th>총 할인 + 부가 결제 금액</th>
-                        <th>총 결제 금액</th>
+                        <th colSpan={2}>총 주문 금액</th>
+                        <th colSpan={2}>총 할인 + 부가 결제 금액</th>
+                        <th colSpan={1}>총 결제 금액</th>
                     </tr>
                     <tr>
-                        <td style={{fontWeight : 'bold', fontSize : '16px'}}>{paytotal}원</td>
-                        <td style={{fontWeight : 'bold', fontSize : '16PX'}}>0원</td>
-                        <td style={{fontWeight : 'bold' , fontSize : '16px'}}>= {paytotal}원</td>
+                        <td style={{fontWeight : 'bold', fontSize : '16px'}} colSpan={2}>{paytotal}원</td>
+                        <td style={{fontWeight : 'bold', fontSize : '16PX'}} colSpan={2}>0원</td>
+                        <td style={{fontWeight : 'bold' , fontSize : '16px'}} colSpan={1}>= {paytotal}원</td>
                     </tr>
                 </table>
                 <table border='1' className={styles.paytable2}>
