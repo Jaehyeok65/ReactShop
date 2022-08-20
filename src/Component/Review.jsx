@@ -73,6 +73,12 @@ const Review = () => {
         if(data) {
             getReview();
             onWritemode();
+            setWrite({
+                ...write,
+                subject : '',
+                content : '',
+                
+            })
         }
         
     }
