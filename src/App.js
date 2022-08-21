@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'; //화면 전환에 필요한 라우터 임포트
 import Home from './Router/Home';
 import Login from './Router/Login';
@@ -8,13 +8,18 @@ import mybase, { dbService } from './mybase';
 import Cart from './Router/Cart';
 import MyShop from './Router/MyShop';
 import Admin from './Router/Admin';
+import Join from './Router/Join';
+import WishList from './Router/WishList';
+import Payment from './Router/Payment';
+import OrderList from './Router/OrderList';
+import OrderDetail from './Router/OrderDetail';
 
 
-/*const storage = storageService.refFromURL('gs://reactshop-b5520.appspot.com/shop1.PNG');
-console.log(storage.getDownloadURL('gs://reactshop-b5520.appspot.com/shop1.PNG'));*/
 
 function App() { //최상위 컴포넌트로 데이터는 App에다가 저장하여 props로 전달해줄 것.
 
+  const auth = mybase.auth();
+  auth.setPersistence('session');
   const [input, setInput] = useState({
     name : '',  //상품 이름 
     userId : '',
@@ -23,8 +28,18 @@ function App() { //최상위 컴포넌트로 데이터는 App에다가 저장하
     });
 
   const [good, setGood] = useState([]);
+  const [user, setUser] = useState(null);
 
-  console.log(good);
+  //console.log(good);
+
+  console.log(user);
+
+  const joininfo = async(info) => {
+    const data = auth.currentUser;
+    await data.updateProfile({
+      displayName : info.displayname
+    });
+  }
 
 
 
@@ -43,8 +58,7 @@ function App() { //최상위 컴포넌트로 데이터는 App에다가 저장하
     })
   }
 
-  const auth = mybase.auth();
-  const [user, setUser] = useState(null);
+
 
   useEffect( () => {
     auth.onAuthStateChanged( (user) => {
@@ -55,6 +69,9 @@ function App() { //최상위 컴포넌트로 데이터는 App에다가 저장하
           updateProfile : (args) => user.updateProfile(args),
         });
       }
+      else {
+        setUser(null);
+      }
     })
 
     getGood();
@@ -62,14 +79,14 @@ function App() { //최상위 컴포넌트로 데이터는 App에다가 저장하
 
   //console.log(imgarray);
 
-  const refreshUser = () => {
+  /*const refreshUser = () => {
     const user = auth.currentUser;
     setUser({
       displayName : user.displayName,
       uid : user.uid,
       updateProfile : (args) => user.updateProfile(args),
     });
-  }
+  }*/
 
 
 
@@ -80,25 +97,40 @@ function App() { //최상위 컴포넌트로 데이터는 App에다가 저장하
     <Router>
       <Switch>
         <Route exact path='/'> 
-          <Home Goods={good}/>
+          <Home Goods={good} user={user}/>
         </Route>
         <Route exact path='/shop'>
-          <Shop Goods={good}/>
+          <Shop Goods={good} user={user}/>
         </Route>
         <Route exact path='/product/:name'>
-          <Product Goods={good} />
+          <Product Goods={good} user={user} />
         </Route>
         <Route exact path='/login'>
-          <Login />
+          <Login user={user} />
+        </Route>
+        <Route exact path='/join'>
+          <Join user={user} joininfo={joininfo} />
         </Route>
         <Route exact path='/cart'>
-          <Cart />
+          <Cart user={user}/>
         </Route>
         <Route exact path='/myshop'>
-          <MyShop />
+          <MyShop user={user} />
         </Route>
         <Route exact path='/admin'>
           <Admin input = {input} setinput ={setInput} />
+        </Route>
+        <Route exact path='/wish'>
+          <WishList user={user} />
+        </Route>
+        <Route exact path='/payment'>
+          <Payment />
+        </Route>
+        <Route exact path='/order'>
+          <OrderList />
+        </Route>
+        <Route exact path='/orderdetail/:orderid'>
+          <OrderDetail />
         </Route>
       </Switch>
     </Router>

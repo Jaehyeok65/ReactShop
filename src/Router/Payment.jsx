@@ -35,7 +35,7 @@ const Payment = () => {
     const [paytotal, setPaytotal] = useState(() => JSON.parse(window.localStorage.getItem('paytotal')) || null);
     
     const [ship, setShip] = useState({
-        name : '',  //주문자 이름
+        name : JSON.parse(window.sessionStorage.getItem('user')).displayName || '',  //주문자 이름
         postcode : '', //우편 번호
         address : '',  //배송 주소
         phone : { first : '010', second : '', third : ''}, //주문자 핸드폰
@@ -52,6 +52,7 @@ const Payment = () => {
     const thirdphoneInput = useRef();
     const firstemailInput = useRef();
     const secondemailInput = useRef();
+    
 
 
 
@@ -193,7 +194,7 @@ const Payment = () => {
         const orderid = uuidv4(); //한 번의 주문에는 주문번호가 같아야하기 때문에 미리 주문번호 할당
 
         const pays = pay.map(item => { //각각의 아이템에 주문번호와 주문 일자 데이터를 추가함.
-            const items = {...item, date : today, orderid : orderid}
+            const items = {...item, date : today, orderid : orderid, shipstate : '배송전', canclestate : '불가'}
             return items;
         })
 
@@ -201,7 +202,8 @@ const Payment = () => {
         const response = { ...res,
         item : pays,
         uid : user.uid,
-        useremail : user.email
+        useremail : user.email,
+        orderid : orderid
         };
         const data = await dbService.collection('shipping').add(response);
 

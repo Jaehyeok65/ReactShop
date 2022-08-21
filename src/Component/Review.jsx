@@ -15,10 +15,11 @@ const Review = () => {
         subject : '',
         content : '',
         productname : name,
-        name : '팔협지',
+        name : JSON.parse(window.sessionStorage.getItem('user')) !== null ? JSON.parse(window.sessionStorage.getItem('user')).displayName : '',
         date : '',
         hit : 0
     })
+
 
     const [ writemode, setWritemode ] = useState(false);
 
@@ -46,7 +47,7 @@ const Review = () => {
         return [year, month, day].join(delimiter);
     }
 
-    console.log(review.length === 0);
+    console.log(write);
 
 
     const onWritemode = () => {
@@ -63,6 +64,15 @@ const Review = () => {
     }
 
     const onSubmit = async() => {
+        if(write.name === '') { //로그인을 안했을 경우
+            alert('댓글을 작성하시려면 로그인이 필요합니다.');
+            setWrite({
+                ...write,
+                subject : '',
+                content : ''
+            })
+            return;
+        }
         const today = Formatting(new Date());
         const res = { ...write,
         date : today
