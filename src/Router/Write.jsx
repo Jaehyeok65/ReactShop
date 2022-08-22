@@ -7,6 +7,7 @@ import { dbService } from '../mybase';
 import Footer from '../Component/Footer';
 import { v4 as uuidv4 } from 'uuid';
 import { Transition } from 'react-transition-group';
+import { Link } from 'react-router-dom';
 
 const duration = 1000;
 
@@ -43,7 +44,8 @@ const Write = ( { Goods }) => {
         productname : product.name,
         name : JSON.parse(window.sessionStorage.getItem('user')) !== null ? JSON.parse(window.sessionStorage.getItem('user')).displayName : '',
         date : '',
-        toggle : false
+        toggle : false,
+        createdat : new Date()
     });
 
 
@@ -118,7 +120,7 @@ const Write = ( { Goods }) => {
     }
 
     const onCancle = () => {
-        window.history.back();
+        window.location.href=`/product/${product.name}`;
     }
 
 
@@ -148,7 +150,7 @@ const Write = ( { Goods }) => {
                             <div className={styles.flexcontainer2}>
                                 <p>{product.name}</p>
                                 <p>{product.price}</p>
-                                <p><button>상품상세보기</button><button>상품정보선택</button></p>
+                                <p><button><Link to={`/product/${product.name}`} className={styles.textlink}>상품상세보기</Link></button><button>상품정보선택</button></p>
                             </div>
                         </div>
                         <div className={styles.flexcontainer3}>

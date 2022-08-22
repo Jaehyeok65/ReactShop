@@ -19,7 +19,8 @@ const Reviews = () => {
         productname : name,
         name : JSON.parse(window.sessionStorage.getItem('user')) !== null ? JSON.parse(window.sessionStorage.getItem('user')).displayName : '',
         date : '',
-        toggle : false
+        toggle : false,
+        createdat : new Date()
     });
 
 
@@ -35,7 +36,7 @@ const Reviews = () => {
 
     const getReview = async() => {
         setReview([]); // 데이터 중복 초기화를 위해 비움
-        const data = await dbService.collection('review').where('productname','==',name).get();
+        const data = await dbService.collection('review').where('productname','==',name).orderBy('createdat','desc').get();
         data.forEach( item => {
             const res = {
                 ...item.data(),
