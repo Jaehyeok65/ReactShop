@@ -1,0 +1,120 @@
+.sort {
+    display: flex;
+}
+
+.write {
+    width: 100%;
+    margin-left: 10%;
+    margin-right: 20%;
+    margin-bottom: 10%;
+}
+
+.gridcontainer1 {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+
+.gridcontainer1 span {
+    
+}
+
+.inputs {
+    height: 20px;
+}
+
+.container {
+    width: 100%;
+    margin-left: 10%;
+    margin-right: 20%;
+    margin-bottom: 10%;
+}
+
+.p1 {
+    color: gray;
+    font-size: 12px;
+}
+
+.p2 {
+    font-size: 12px;
+}
+
+.back {
+    border: 1px solid gray;
+    width: 100%;
+    height: 100%;
+}
+
+.flexcontainer1 {
+    display: flex;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+.img1 {
+    width: 100%;
+    height: 100%;
+    max-width: 100px;
+    max-height: 150px;
+}
+
+.flexcontainer2 {
+    font-size: 12px;
+    align-self: center;
+    margin-left: 5%;
+}
+
+.flexcontainer2 p:nth-child(1) {
+    font-weight: bold;
+}
+
+.flexcontainer2 p:nth-child(3) button:nth-child(1) {
+    background-color: black;
+    color: white;
+    font-size: 12px;
+    padding: 4px 12px;
+}
+
+.flexcontainer2 p:nth-child(3) button:nth-child(2) {
+    font-size: 12px;
+    padding: 4px 12px;
+    margin-left: 4px;
+    background-color: white;
+}
+
+.flexcontainer3 {
+    margin-left: 5%;
+    margin-top: 2%;
+    margin-right: 4%;
+}
+
+.flexcontainer3 span:nth-child(1) {
+    margin-left: 2%;
+    
+}
+
+.flexcontainer4 {
+    margin-top: 1%;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.textareas {
+    width: 99%;
+    height: 400px;
+    resize: none;
+}
+
+button {
+    padding : 4px 12px;
+    background-color: white;
+    border: 1px solid gray;
+    font-size: 12px;
+}
+.button2 {
+    background-color: black;
+    color: white;
+}
