@@ -61,7 +61,7 @@ const WishList = ( { user }) => {
     const price = (cartarray) => {
         let money = 0;
         for(let i in cartarray) {
-            money += parseInt(cartarray[i].price) * 1000;
+            money += parseInt(cartarray[i].price);
         }
 
         return money;
@@ -72,6 +72,14 @@ const WishList = ( { user }) => {
 
 
     const additem = () => {   //장바구니에 아이템을 추가함
+
+        const checks = onCheck();
+
+        if(checks) {
+            alert('선택된 상품이 없습니다.');
+            return;
+        }
+
         const confirm = window.confirm('해당 상품을 장바구니에 추가하시겠습니까?');
 
         if(confirm) {
@@ -102,8 +110,16 @@ const WishList = ( { user }) => {
             response = wish.filter( item => item.check === true); //장바구니에 상품이 없을 경우 wishlist에 체크된 상품만 장바구니에 추가
         }
         const total = price(response);
+        
+        const responses = response.map(item => ( {
+            ...item,
+            check : false
+        } //장바구니에 선택된 상태로 저장하면 안되므로 모든 check를 false로 초기화 
+        ));
 
-        window.localStorage.setItem('cart',JSON.stringify(response)); //새로운 response를 cart 장바구니에 저장.
+        
+
+        window.localStorage.setItem('cart',JSON.stringify(responses)); //새로운 response를 cart 장바구니에 저장.
         window.localStorage.setItem('total',JSON.stringify(total));
 
         const confirms = window.confirm('장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?');
@@ -130,7 +146,7 @@ const WishList = ( { user }) => {
     const onAllbuy = () => {
         let price = 0;
         for(let i in wish) {
-            price += parseInt(wish[i].price) * 1000;
+            price += parseInt(wish[i].price);
         }
         window.localStorage.setItem('pay',JSON.stringify(wish));
         window.localStorage.setItem('paytotal',JSON.stringify(price));
@@ -234,4 +250,4 @@ const WishList = ( { user }) => {
     )
 }
 
-export default WishList;
+export default React.memo(WishList);

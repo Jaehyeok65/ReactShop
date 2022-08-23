@@ -9,6 +9,7 @@ import Shipinfo from '../Component/Shipinfo';
 import Paymentway from '../Component/Paymentway';
 import { dbService } from '../mybase';
 import { v4 as uuidv4 } from 'uuid';
+import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
 
 const duration = 1000;
@@ -177,6 +178,53 @@ const Payment = () => {
         return [year, month, day].join(delimiter);
     }
 
+    const price = (cartarray) => {
+        let money = 0;
+        for(let i in cartarray) {
+            money += cartarray[i].price * cartarray[i].quantity
+        };
+
+        return money;
+    }
+
+    const onQuantityup = (item) => {
+        const temp = {
+            ...item,
+            quantity : item.quantity+1
+        }
+
+        //console.log(temp);
+
+        const res = pay.map((q) => (
+            q.name === item.name ? temp : q
+        ));
+
+        const money = price(res);
+
+        setPay(() => res);
+        setPaytotal(() => money);
+    }
+
+    const onQuantitydown = (item) => {
+
+        const numbers = (item.quantity - 1) > 0 ? item.quantity - 1 : item.quantity;
+        const temp = {
+            ...item,
+            quantity : numbers
+        }
+
+        //console.log(temp);
+
+        const res = pay.map((q) => (
+            q.name === item.name ? temp : q
+        ));
+
+        const money = price(res);
+
+        setPay(() => res);
+        setPaytotal(() => money);
+    }
+
 
     const onSubmit = async() => {
 
@@ -249,10 +297,16 @@ const Payment = () => {
                         <td className={styles.imgs}><Link to={`product/${data.name}`}>{<img src={data.url} alt = {data.name} width='110px' height='120px' />}</Link></td>
                         <td><Link to={`product/${data.name}`} className={styles.textlink}>{data.name}</Link></td>
                         <td>{data.price}원</td>
-                        <td>{1}</td>
+                        <td><div className={styles.quantity}><span>{data.quantity}</span>
+                                <div className={styles.arrowbutton}>
+                                    <button className={styles.arrow} onClick={() => onQuantityup(data)}><FaArrowUp /></button>
+                                    <button className={styles.arrow} onClick={() => onQuantitydown(data)}><FaArrowDown /></button>
+                                    </div>
+                                </div>
+                                </td>
                         <td>{0}</td>
                         <td>{0}</td>
-                        <td>{data.price}원</td>
+                        <td>{data.price * data.quantity}원</td>
                     </tr>
                 )) : null }
                 </tbody>
@@ -313,4 +367,4 @@ const Payment = () => {
 }
 
 
-export default Payment;
+export default React.memo(Payment);

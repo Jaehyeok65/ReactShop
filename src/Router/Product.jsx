@@ -7,6 +7,8 @@ import { useEffect, useRef } from 'react';
 import Category from '../Component/Category';
 import Footer from '../Component/Footer';
 import { Transition } from 'react-transition-group';
+import Review from '../Component/Review';
+import Reviews from '../Component/Reviews';
 
 const duration = 1000;
 
@@ -47,18 +49,13 @@ const Product = ( { Goods, user } ) => {
     const price = (cartarray) => {
         let money = 0;
         for(let i in cartarray) {
-            money += parseInt(cartarray[i].price) * 1000;
+            money += parseInt(cartarray[i].price)
         }
 
         return money;
     }
 
-    const userCheck = () => { //관심상품에 추가하기 위해 권한이 있는지 확인
-        if(user === null) {
-            alert('로그인 후 이용가능합니다.');
-            window.location.href='/login';
-        }
-    }
+    console.log(product);
 
 
 
@@ -232,10 +229,11 @@ const Product = ( { Goods, user } ) => {
                 ))}
                 </Transition>
             </div>
+            <Reviews />
             <Footer />
         </div>
         </>
     )
 }
 
-export default Product;
+export default React.memo(Product);

@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import Footer from '../Component/Footer';
 import { Transition } from 'react-transition-group';
 import { Link } from 'react-router-dom';
+import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
 const duration = 1000;
 
@@ -64,7 +65,7 @@ const Cart = ( { user }) => {
     const onAllbuy = () => {
         let price = 0;
         for(let i in cart) {
-            price += parseInt(cart[i].price) * 1000;
+            price += parseInt(cart[i].price * cart[i].quantity);
         }
         window.localStorage.setItem('pay',JSON.stringify(cart));
         window.localStorage.setItem('paytotal',JSON.stringify(price));
@@ -80,14 +81,23 @@ const Cart = ( { user }) => {
         const array = cart.filter(item => item.check === true);
         let price = 0;
         for(let i in array) {
-            price += parseInt(array[i].price) * 1000;
+            price += parseInt(array[i].price * array[i].quantity);
         }
         window.localStorage.setItem('pay',JSON.stringify(array));
         window.localStorage.setItem('paytotal',JSON.stringify(price));
         window.location.href='/payment';
     }
 
-    //console.log(cart);
+    const price = (cartarray) => {
+        let money = 0;
+        for(let i in cartarray) {
+            money += cartarray[i].price * cartarray[i].quantity
+        };
+
+        return money;
+    }
+
+    
 
     const onRemove = () => {
 
@@ -103,7 +113,7 @@ const Cart = ( { user }) => {
         const array = cart.filter(item => item.check === false);
         let price = 0;
         for(let i in array) {
-            price += parseInt(array[i].price) * 1000;
+            price += parseInt(array[i].price * array[i].quantity);
         }
         
         window.localStorage.setItem('total',JSON.stringify(price));
@@ -119,6 +129,44 @@ const Cart = ( { user }) => {
         window.localStorage.removeItem('total');
         window.location.href='/cart';
         }
+    }
+
+    const onQuantityup = (item) => {
+        const temp = {
+            ...item,
+            quantity : item.quantity+1
+        }
+
+        //console.log(temp);
+
+        const res = cart.map((q) => (
+            q.name === item.name ? temp : q
+        ));
+
+        const money = price(res);
+
+        setCart(() => res);
+        setTotal(() => money);
+    }
+
+    const onQuantitydown = (item) => {
+
+        const numbers = (item.quantity - 1) > 0 ? item.quantity - 1 : item.quantity;
+        const temp = {
+            ...item,
+            quantity : numbers
+        }
+
+        //console.log(temp);
+
+        const res = cart.map((q) => (
+            q.name === item.name ? temp : q
+        ));
+
+        const money = price(res);
+
+        setCart(() => res);
+        setTotal(() => money);
     }
 
 
@@ -156,10 +204,16 @@ const Cart = ( { user }) => {
                                 <td className={styles.imgs}><Link to={`product/${data.name}`}>{<img src={data.url} alt = {data.name} width='110px' height='120px' />}</Link></td>
                                 <td><Link to={`product/${data.name}`} className={styles.textlink}>{data.name}</Link></td>
                                 <td>{data.price}원</td>
-                                <td>{1}</td>
+                                <td><div className={styles.quantity}><span>{data.quantity}</span>
+                                <div className={styles.arrowbutton}>
+                                    <button className={styles.arrow} onClick={() => onQuantityup(data)}><FaArrowUp /></button>
+                                    <button className={styles.arrow} onClick={() => onQuantitydown(data)}><FaArrowDown /></button>
+                                    </div>
+                                </div>
+                                </td>
                                 <td>{0}</td>
                                 <td>{0}</td>
-                                <td>{data.price}원</td>
+                                <td>{data.price * data.quantity}원</td>
                             </tr>
                         )) : null }
                         </tbody>
@@ -211,4 +265,4 @@ const Cart = ( { user }) => {
     )
 }
 
-export default Cart;
+export default React.memo(Cart);
