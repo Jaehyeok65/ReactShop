@@ -4,6 +4,8 @@
 
 #### [클론 코딩 대상 쇼핑몰 주소](https://cabeza.co.kr/index.html)
 
+<br />
+<br />
 
 
 #### Description
@@ -26,7 +28,9 @@
 
 
 
-<hr/>
+<br />
+<br />
+<br />
 
 
 ## 프로젝트를 진행하며 새롭게 알게된 점
