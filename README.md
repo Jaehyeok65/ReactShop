@@ -9,5 +9,39 @@
 #### Description
 
 
+![SHOPLIST](https://user-images.githubusercontent.com/62687875/186170498-d0c4ceff-79ac-4522-9531-5791c96c8968.PNG)
+
+<hr />
+
+1. 쇼핑몰로서 갖춰야할 기본적인 기능들(장바구니, 관심리스트, 상품 목록 페이지네이션, 댓글, 로그인, 권한 부여, 결제 기능)을 구현하였습니다.
+
+2. 리액트 라우터 라이브러리를 사용하여 SPA 모델로 구현하였으며, 리액트 Transition 라이브러리를 사용하여 애니메이션을 적용하였습니다.
+
+3. CSS FLEX, GRID 컨테이너 등을 사용하여 반응형 웹을 구현하였습니다.
+
+4. LocalStorage, SessionStorage 등을 사용하여 새로고침시 State가 초기화 되는 것을 방지하도록 구현하였습니다.
+
+
+
+
+
+
+<hr/>
+
+
+#### 기술스택
+
+<img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-RGBA27?style=flat-square&logo=javascript&logoColor=white"/> <img src="https://img.shields.io/badge/HTML5-BBBA27?style=flat-square&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-TTAA28?style=flat-square&logo=CSS3&logoColor=white"/>
+
+
+
+
+
+
+
+
+
+
+
 
 
