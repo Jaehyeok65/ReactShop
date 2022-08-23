@@ -29,12 +29,6 @@
 <hr/>
 
 
-#### 기술스택
-
-<img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-RGBA27?style=flat-square&logo=javascript&logoColor=white"/> <img src="https://img.shields.io/badge/HTML5-BBBA27?style=flat-square&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-TTAA28?style=flat-square&logo=CSS3&logoColor=white"/>
-
-
-
 ## 프로젝트를 진행하며 새롭게 알게된 점
 
 
@@ -50,6 +44,13 @@ React에서 State를 사용할 때 새로고침을 하면 변경되었던 state�
 #### Media Query
 
 Media Query를 사용하여 뷰포트의 크기에 맞춰 아이템을 배치하는 반응형 웹페이지를 구현할 수 있게 되었습니다. 
+
+<br />
+<br />
+
+#### 기술스택
+
+<img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-RGBA27?style=flat-square&logo=javascript&logoColor=white"/> <img src="https://img.shields.io/badge/HTML5-BBBA27?style=flat-square&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-TTAA28?style=flat-square&logo=CSS3&logoColor=white"/>
 
 
 
