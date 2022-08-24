@@ -45,7 +45,8 @@ const Write = ( { Goods }) => {
         name : JSON.parse(window.sessionStorage.getItem('user')) !== null ? JSON.parse(window.sessionStorage.getItem('user')).displayName : '',
         date : '',
         toggle : false,
-        createdat : new Date()
+        createdat : new Date(),
+        url : product.url
     });
 
 
@@ -162,7 +163,7 @@ const Write = ( { Goods }) => {
                         <textarea value={input.content} name='content' onChange={onChange} className={styles.textareas}/>
                         <div className={styles.flexcontainer4}>
                             <div>
-                            <button className={styles.button2}>목록으로</button>
+                            <button className={styles.button2}><Link to='/coummunity' className={styles.textlink}>목록으로</Link></button>
                             </div>
                             <div>
                                 <button className={styles.button2} onClick={onSubmit}>등록</button>

@@ -1,0 +1,49 @@
+.sort {
+    display: flex;
+}
+
+.container {
+    width: 100%;
+    margin-left: 10%;
+    margin-right: 18%;
+}
+
+.pagenation {
+    margin-top: 10%;
+    text-align: center;
+    margin-bottom: 10%;
+}
+
+.container p:nth-child(1) {
+    margin-top: 1%;
+    color: gray;
+    font-size: 12px;
+}
+
+.container p:nth-child(2) {
+    font-size: 12px;
+    margin-bottom: 4%;
+}
+
+
+.ordertable tr:nth-child(1) th:nth-child(4) {
+    width: 500px;
+}
+
+.ordertable tr:nth-child(1) th:nth-child(3) {
+    width: 120px;
+}
+
+.ordertable tr:nth-child(1) th:nth-child(6) {
+    width: 120px;
+}
+
+@media screen and (max-width:500px) {
+    .container {
+        width: 100%;
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+    
+}
+
