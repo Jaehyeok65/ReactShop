@@ -62,6 +62,16 @@ Media Query를 사용하여 뷰포트의 크기에 맞춰 아이템을 배치하
 
 Daum PostCode API, 아임포트 결제 API 등 오픈소스 API를 가져와서 상황에 맞게 변형하여 사용할 수 있게 되었습니다.
 
+
+<br />
+<br />
+
+
+#### Animation Control
+
+
+useRef 훅을 사용하여 DOM에 접근할 수 있게 되었고, DOM에 직접 접근하여 애니메이션을 설정함으로써 UX를 향상시킬 수 있게 되었습니다.
+
 <br />
 <br />
 
