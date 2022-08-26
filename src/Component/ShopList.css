@@ -1,0 +1,131 @@
+.shop {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px 20px;
+    margin-left: 10%;
+    margin-right: 5%;
+    margin-bottom: 2%;
+    margin-top: 1%;
+    /*top : 10%;*/
+}
+
+.img2 {
+    width: 100px;
+    height: 100px;
+}
+
+.cardtop:hover {
+    transform: translateY(-10px);
+    font-weight: bold;
+}
+
+.pagenation {
+    display: flex;
+    justify-content: center;
+}
+
+.buttons {
+    border: none;
+    background-color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 5%;
+}
+
+.buttons:hover {
+    cursor: pointer;
+    transform: translateY(-2px);
+}
+
+
+.buttons[aria-current] {
+    font-weight: bold;
+}
+
+
+.card {
+    border : 1px solid #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+
+}
+
+.cardtop > img {
+    height: 100%;
+    width: 100%;
+}
+
+.cardtop p:nth-child(2) {
+    font-size: 0.8rem;
+    text-align: left;
+}
+
+.cardtop p:nth-child(3) {
+    font-size: 0.8rem;
+    text-align: right;
+}
+
+.textlink {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+@keyframes fadein {
+    0% {
+      opacity: 0;
+      transform: translate(10em, 0);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+
+@media screen and (max-width : 500px) {
+
+    .shop {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 20px 20px;
+        margin : 2%;
+        padding: 0;
+    }
+
+    .cardtop p:nth-child(2) {
+        font-size: 0.7rem;
+        text-align: left;
+    }
+    
+    .cardtop p:nth-child(3) {
+        font-size: 0.7rem;
+        text-align: right;
+    }
+    
+    
+}
+
+@media screen and (max-width : 840px) and (min-width : 501px) {
+
+    .shop {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 20px 20px;
+        margin : 2%;
+        padding: 0;
+    }
+
+    .cardtop p:nth-child(2) {
+        font-size: 0.7rem;
+        text-align: left;
+    }
+    
+    .cardtop p:nth-child(3) {
+        font-size: 0.7rem;
+        text-align: right;
+    }
+    
+    
+}
