@@ -63,10 +63,6 @@ Media Query를 사용하여 뷰포트의 크기에 맞춰 아이템을 배치하
 Daum PostCode API, 아임포트 결제 API 등 오픈소스 API를 가져와서 상황에 맞게 변형하여 사용할 수 있게 되었습니다.
 
 
-<br />
-<br />
-
-
 #### Animation Control
 
 
