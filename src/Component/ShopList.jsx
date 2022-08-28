@@ -18,14 +18,15 @@ const ShopList = ( { Goods }) => {
 
   useEffect( () => {
     
-    pageref.current.style.animation="fadein 3s 0s";
-    //pageref.current.style.opacity="1";
-    scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+    pageref.current.style.animation="fadein 2.5s 0s";
+    scrollref.current.scrollIntoView(true); //항상 요쇼의 상단에서 페이지네이션
   },[page])
 
-  const aniend = () => {
+  const aniend = () => { //애니메이션이 한 번만 실행되는 것을 방지하기 위해 애니메이션 초기화
     pageref.current.style.animation="";
   }
+
+ 
 
   
 
