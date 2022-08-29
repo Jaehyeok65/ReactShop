@@ -13,7 +13,7 @@
     width: 100%;
     height: 100vh;
     animation: animate 16s ease-in-out infinite;
-    background-size: cover;
+    background-size: contain;
 }
 
 .details {
