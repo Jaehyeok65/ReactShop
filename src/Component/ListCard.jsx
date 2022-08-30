@@ -1,11 +1,45 @@
-import React,{ useState }from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './List.module.css';
 import { Link } from 'react-router-dom';
+import { dbService } from '../mybase';
 
 
-const ListCard = ({ url , price, name }) => {
 
-    const [toggle, setToggle] = useState(true);
+const ListCard = ({ url , price, name, page }) => {
+
+
+    const [renum, setRenum] = useState();
+
+    const getRenum = async() => {
+        const data = await dbService.collection('review').where('productname','==',name).get();
+        //console.log('데이터 확인');
+        setRenum(() => data.size);
+    }
+
+   
+
+    useEffect( () => {
+        getRenum();
+    },[page])
+
+    
+
+    
+
+    const comma = (price) => {
+        let i = 0;
+        while(price > 999) {
+            price = price / 1000;
+            i = i + 1;
+        }
+        const res = price + ',000';
+        
+        return res;
+    }
+
+    
+
+    
 
 
     
@@ -16,9 +50,10 @@ const ListCard = ({ url , price, name }) => {
         <Link to={`/product/${name}`} className={styles.textlink}>
         <div className={styles.card}>
             <div className={styles.cardtop}>
-                { toggle ? <img src={url} alt={price} /> : null}
+            <img src={url} alt={price} />
                 <p>{name}</p>
-                <p>{price}원</p>
+                <p>{comma(price)}원</p>
+                <p>사용후기 : {renum && renum}</p>
             </div>
         </div>
         </Link>
@@ -27,4 +62,4 @@ const ListCard = ({ url , price, name }) => {
 }
 
 
-export default ListCard;
+export default React.memo(ListCard);
