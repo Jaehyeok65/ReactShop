@@ -55,7 +55,17 @@ const Product = ( { Goods, user } ) => {
         return money;
     }
 
-    console.log(product);
+    const comma = (price) => {
+        let i = 0;
+        while(price > 999) {
+            price = price / 1000;
+            i = i + 1;
+        }
+        const res = price + ',000';
+        
+        return res;
+        
+    }
 
 
 
@@ -207,14 +217,14 @@ const Product = ( { Goods, user } ) => {
                      <div className={styles.container}>
                      <div className={styles.fonts}>
                          <p>{product !== null ? product.name : null}</p>
-                         <p>{product !== null ? product.price : null}원</p>
+                         <p>{product !== null ? comma(product.price) : null}원</p>
                          <p>3,000원 (50,000원 이상 구매 시 무료)</p>
                          <br/>
                          <p>PRODUCT INFO &gt;</p>
                          <p>SHIPPING INFO &gt;</p>
                          <p>SIZEGUIDE INFO &gt;</p>
                          <br/>
-                         <h5>TOTAL &nbsp;:&nbsp; {product !== null ? product.price : null}원</h5>
+                         <h5>TOTAL &nbsp;:&nbsp; {product !== null ? comma(product.price) : null}원</h5>
                          <div className={styles.button}>
                              <button onClick={addbuy}>BUY NOW</button>
                              <button onClick={additem}>ADD CART</button>
