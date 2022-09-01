@@ -7,7 +7,6 @@ import { useEffect, useRef } from 'react';
 import Category from '../Component/Category';
 import Footer from '../Component/Footer';
 import { Transition } from 'react-transition-group';
-import Review from '../Component/Review';
 import Reviews from '../Component/Reviews';
 
 const duration = 1000;
@@ -30,7 +29,7 @@ const Product = ( { Goods, user } ) => {
 
     const { name }  = useParams();
     const [product, setProduct] = useState(() => 
-        JSON.parse(window.localStorage.getItem('product')) || null
+    JSON.parse(window.localStorage.getItem('product')) || null
     );
     const [toggle, setToggle] = useState(false);
     const [array,setArray] = useState([]);
@@ -39,11 +38,61 @@ const Product = ( { Goods, user } ) => {
     //console.log(Goods);
 
     useEffect( () => {
+        const script = document.createElement("script");
+        script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+        script.async = true;
+        document.body.appendChild(script);
         find();
         setToggle(prev => !prev);
         scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
         //window.localStorage.setItem("product",JSON.stringify(product));
+       return () => document.body.removeChild(script);
     },[])
+
+    const addShare = () => {
+
+        if(window.Kakao) {
+            const kakao = window.Kakao;
+
+            if(!kakao.isInitialized()) {
+                kakao.init("ae36ac4f82f003aa0e94fd1266270445");
+            }
+
+            kakao.Share.createDefaultButton({
+                container: '#kakaotalk-sharing-btn',
+                objectType: 'feed',
+                content: {
+                  title: product.name,
+                  description: '의류',
+                  imageUrl:
+                    product.url,
+                  link: {
+                    mobileWebUrl: 'http://localhost:3000/login',
+                    androidExecutionParams: 'test',
+                    webUrl : 'http://localhost:3000/login'
+                  },
+                },
+                buttons: [
+                  {
+                    title: '웹으로 이동',
+                    link: {
+                      mobileWebUrl: 'http://localhost:3000/login',
+                      webUrl : `http://localhost:3000/product/${product.name}`
+                    },
+                  },
+                ]
+              });
+
+        }
+    }
+
+   
+
+    
+
+    
+
+    
 
     
     const price = (cartarray) => {
@@ -191,8 +240,12 @@ const Product = ( { Goods, user } ) => {
     
 
     const find = () => {
+        console.log('실행?');
+        console.log("왜 안해");
+        console.log(Goods);
         for(let i in Goods) {
             if(Goods[i].name === name) {
+                console.log(name);
                 setProduct(Goods[i]);
                 window.localStorage.setItem("product",JSON.stringify(Goods[i]));
                 break;
@@ -229,6 +282,12 @@ const Product = ( { Goods, user } ) => {
                              <button onClick={addbuy}>BUY NOW</button>
                              <button onClick={additem}>ADD CART</button>
                              <button onClick={addwish}>WISH LIST</button>
+                             <button id='kakaotalk-sharing-btn' onClick={addShare}>
+                             <img
+    src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+    alt="카카오톡 공유 보내기 버튼" width='35px' height='35px'
+  />
+                             </button>
                          </div>
                      </div>
                      <div className={styles.images}>
