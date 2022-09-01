@@ -8,6 +8,8 @@ import Category from '../Component/Category';
 import Footer from '../Component/Footer';
 import { Transition } from 'react-transition-group';
 import Reviews from '../Component/Reviews';
+import { dbService } from '../mybase';
+
 
 const duration = 1000;
 
@@ -28,9 +30,7 @@ const transitionStyles = {
 const Product = ( { Goods, user } ) => {
 
     const { name }  = useParams();
-    const [product, setProduct] = useState(() => 
-    JSON.parse(window.localStorage.getItem('product')) || null
-    );
+    const [product, setProduct] = useState([]);
     const [toggle, setToggle] = useState(false);
     const [array,setArray] = useState([]);
     const scrollref = useRef();
@@ -42,12 +42,21 @@ const Product = ( { Goods, user } ) => {
         script.src = "https://developers.kakao.com/sdk/js/kakao.js";
         script.async = true;
         document.body.appendChild(script);
-        find();
+        //find();
+        getProduct();
         setToggle(prev => !prev);
         scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
         //window.localStorage.setItem("product",JSON.stringify(product));
        return () => document.body.removeChild(script);
     },[])
+
+    const getProduct = async() => {
+        const data = await dbService.collection('shopping').where('name', '==', name).get();
+        data.forEach( doc => {
+            setProduct(() => doc.data());
+            //console.log(doc.data());
+        })
+    }
 
     const addShare = () => {
 
@@ -239,19 +248,7 @@ const Product = ( { Goods, user } ) => {
   
     
 
-    const find = () => {
-        console.log('실행?');
-        console.log("왜 안해");
-        console.log(Goods);
-        for(let i in Goods) {
-            if(Goods[i].name === name) {
-                console.log(name);
-                setProduct(Goods[i]);
-                window.localStorage.setItem("product",JSON.stringify(Goods[i]));
-                break;
-            }
-        }
-    }
+   
     
    
 
@@ -283,10 +280,8 @@ const Product = ( { Goods, user } ) => {
                              <button onClick={additem}>ADD CART</button>
                              <button onClick={addwish}>WISH LIST</button>
                              <button id='kakaotalk-sharing-btn' onClick={addShare}>
-                             <img
-    src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-    alt="카카오톡 공유 보내기 버튼" width='35px' height='35px'
-  />
+                             <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+                             alt="카카오톡 공유 보내기 버튼" width='35px' height='35px' />
                              </button>
                          </div>
                      </div>
