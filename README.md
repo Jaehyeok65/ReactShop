@@ -68,6 +68,12 @@ Daum PostCode API, 아임포트 결제 API 등 오픈소스 API를 가져와서 
 
 useRef 훅을 사용하여 DOM에 접근할 수 있게 되었고, DOM에 직접 접근하여 애니메이션을 설정함으로써 UX를 향상시킬 수 있게 되었습니다.
 
+
+#### ReFactoring
+
+
+함수 모듈화와 useCallback, useMemo 훅 등을 사용하여 성능을 높이는 리팩토링에 대해서 알게 되었고 부족하나마 성능과 코드 가독성을 높일 수 있게 되었습니다. 
+
 <br />
 <br />
 
