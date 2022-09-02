@@ -17,6 +17,24 @@ export const getList = async() => {  //db에서 shop 아이템을 가져옴
   }
 
 
+export const getShipList = async(users, date) => {
+
+  let array = []
+
+  console.log(users,date);
+
+  const data = await dbService.collection('shipping').where('uid','==', users.uid).where('date','>=', date.firstDate).where('date','<=',date.secondDate).get();
+        data.forEach( item => {
+            array.push(item.data());
+        });
+
+      
+
+  return array;
+
+}
+
+
   
 
 
