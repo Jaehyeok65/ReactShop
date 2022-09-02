@@ -8,7 +8,8 @@ import Category from '../Component/Category';
 import Footer from '../Component/Footer';
 import { Transition } from 'react-transition-group';
 import Reviews from '../Component/Reviews';
-import { dbService } from '../mybase';
+import useAsync from '../Module/useAsync';
+import { getProduct } from '../Api/getProduct';
 
 
 const duration = 1000;
@@ -30,33 +31,27 @@ const transitionStyles = {
 const Product = ( { Goods, user } ) => {
 
     const { name }  = useParams();
-    const [product, setProduct] = useState([]);
     const [toggle, setToggle] = useState(false);
     const [array,setArray] = useState([]);
     const scrollref = useRef();
-    //console.log(name);
-    //console.log(Goods);
+    const [states, refetch] = useAsync(() => getProduct(name), []);
+
+    console.log(states);
 
     useEffect( () => {
         const script = document.createElement("script");
         script.src = "https://developers.kakao.com/sdk/js/kakao.js";
         script.async = true;
         document.body.appendChild(script);
-        //find();
-        getProduct();
         setToggle(prev => !prev);
         scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-        //window.localStorage.setItem("product",JSON.stringify(product));
        return () => document.body.removeChild(script);
     },[])
 
-    const getProduct = async() => {
-        const data = await dbService.collection('shopping').where('name', '==', name).get();
-        data.forEach( doc => {
-            setProduct(() => doc.data());
-            //console.log(doc.data());
-        })
-    }
+
+    
+
+    
 
     const addShare = () => {
 
@@ -65,28 +60,29 @@ const Product = ( { Goods, user } ) => {
 
             if(!kakao.isInitialized()) {
                 kakao.init("ae36ac4f82f003aa0e94fd1266270445");
-            }
+                window.alert('한번 더 눌러주세요!');
+            };
 
             kakao.Share.createDefaultButton({
                 container: '#kakaotalk-sharing-btn',
                 objectType: 'feed',
                 content: {
-                  title: product.name,
+                  title: states.data.name,
                   description: '의류',
                   imageUrl:
-                    product.url,
+                    states.data.url,
                   link: {
-                    mobileWebUrl: 'http://localhost:3000/login',
+                    mobileWebUrl: `http://localhost:3000/product/${states.data.name}`,
                     androidExecutionParams: 'test',
-                    webUrl : 'http://localhost:3000/login'
+                    webUrl : `http://localhost:3000/product/${states.data.name}`
                   },
                 },
                 buttons: [
                   {
                     title: '웹으로 이동',
                     link: {
-                      mobileWebUrl: 'http://localhost:3000/login',
-                      webUrl : `http://localhost:3000/product/${product.name}`
+                      mobileWebUrl: `http://localhost:3000/product/${states.data.name}`,
+                      webUrl : `http://localhost:3000/product/${states.data.name}`
                     },
                   },
                 ]
@@ -136,7 +132,7 @@ const Product = ( { Goods, user } ) => {
         let response = null;
         if(res !== null) { //res가 null이라면 find함수가 작동하지 않으므로 null이 아닌 경우에만 find함수를 사용
         response = resarray.find( item => { //장바구니 내역에서 현재 상품과 이름이 같은 아이템을 찾음
-            return item.name === product.name
+            return item.name === states.data.name
         })}
         if(response !== undefined && response !== null) { //undefined가 아니고 초기값 null이 아니라면 장바구니에 동일한 상품이 있는 것
             const confirm = window.confirm('장바구니에 동일한 상품이 있습니다. 상품을 추가하시겠습니까?');
@@ -157,7 +153,7 @@ const Product = ( { Goods, user } ) => {
             //console.log(res);
             if(res !== null) { //기존에 장바구니에 상품이 있다면
             const cartarray = array.concat(res); //배열을 만들어서 기존에 장바구니에 있던 상품에 현재 상품을 추가
-            const cartarrays = [...cartarray, product];
+            const cartarrays = [...cartarray, states.data];
             const money = price(cartarrays);
             window.localStorage.setItem('cart',JSON.stringify(cartarrays)); //새로 만든 배열을 장바구니에 추가
             window.localStorage.setItem('total',JSON.stringify(money)); //Total 머니를 장바구니에 추가
@@ -167,7 +163,7 @@ const Product = ( { Goods, user } ) => {
                 }
             }
             else {  //기존에 장바구니에 상품이 없다면
-                const cartarrays = array.concat(product); //map함수를 사용해야하므로 배열형태로 장바구니에 추가
+                const cartarrays = array.concat(states.data); //map함수를 사용해야하므로 배열형태로 장바구니에 추가
                 const money = price(cartarrays);
                 window.localStorage.setItem('cart',JSON.stringify(cartarrays)); //현재 상품만 장바구니에 추가
                 window.localStorage.setItem('total',JSON.stringify(money)); //Total 머니를 장바구니에 추가
@@ -192,7 +188,7 @@ const Product = ( { Goods, user } ) => {
         let response = null;
         if(res !== null) { //res가 null이라면 find함수가 작동하지 않으므로 null이 아닌 경우에만 find함수를 사용
         response = resarray.find( item => { //장바구니 내역에서 현재 상품과 이름이 같은 아이템을 찾음
-            return item.name === product.name
+            return item.name === states.data.name
         })}
         if(response !== undefined && response !== null) { //undefined가 아니고 초기값 null이 아니라면 장바구니에 동일한 상품이 있는 것
             const confirm = window.confirm('관심상품에 동일한 상품이 있습니다. 상품을 추가하시겠습니까?');
@@ -214,7 +210,7 @@ const Product = ( { Goods, user } ) => {
             //console.log(res);
             if(res !== null) { //기존에 장바구니에 상품이 있다면
             const wisharray = array.concat(res); //배열을 만들어서 기존에 장바구니에 있던 상품에 현재 상품을 추가
-            const wisharrays = [...wisharray, product];
+            const wisharrays = [...wisharray, states.data];
             window.localStorage.setItem('wish',JSON.stringify(wisharrays)); //새로 만든 배열을 장바구니에 추가
             const confirms = window.confirm('관심상품에 추가되었습니다. 관심상품으로 이동하시겠습니까?');
                 if(confirms) {
@@ -222,7 +218,7 @@ const Product = ( { Goods, user } ) => {
                 }
             }
             else {  //기존에 장바구니에 상품이 없다면
-                const wisharrays = array.concat(product); //map함수를 사용해야하므로 배열형태로 장바구니에 추가
+                const wisharrays = array.concat(states.data); //map함수를 사용해야하므로 배열형태로 장바구니에 추가
                 window.localStorage.setItem('wish',JSON.stringify(wisharrays)); //현재 상품만 장바구니에 추가
                 const confirms = window.confirm('관심상품에 추가되었습니다. 관심상품으로 이동하시겠습니까?');
                 if(confirms) {
@@ -238,64 +234,60 @@ const Product = ( { Goods, user } ) => {
 
         if(confirm) {
             let array = [];
-            const response = array.concat(product); //map함수를 사용하므로 배열형식으로 추가.
+            const response = array.concat(states.data); //map함수를 사용하므로 배열형식으로 추가.
             window.localStorage.setItem('pay',JSON.stringify(response));
-            window.localStorage.setItem('paytotal',JSON.stringify(product.price));
+            window.localStorage.setItem('paytotal',JSON.stringify(states.data.price));
             window.location.href='/payment';
         }
     }
 
   
-    
-
-   
-    
-   
-
-    //console.log(product);
 
     
     return (
         <>
-        <div className={styles.body} ref={scrollref}>
-            <Nav user={user} />
-            <div className={styles.sort}>
-            <Category />
-            <Transition in={toggle} timeout={500} appear>
-                { (state =>  (
-                    <div style={ {...defaultStyle, ...transitionStyles[state]}}>
-                     <div className={styles.container}>
-                     <div className={styles.fonts}>
-                         <p>{product !== null ? product.name : null}</p>
-                         <p>{product !== null ? comma(product.price) : null}원</p>
-                         <p>3,000원 (50,000원 이상 구매 시 무료)</p>
-                         <br/>
-                         <p>PRODUCT INFO &gt;</p>
-                         <p>SHIPPING INFO &gt;</p>
-                         <p>SIZEGUIDE INFO &gt;</p>
-                         <br/>
-                         <h5>TOTAL &nbsp;:&nbsp; {product !== null ? comma(product.price) : null}원</h5>
-                         <div className={styles.button}>
-                             <button onClick={addbuy}>BUY NOW</button>
-                             <button onClick={additem}>ADD CART</button>
-                             <button onClick={addwish}>WISH LIST</button>
-                             <button id='kakaotalk-sharing-btn' onClick={addShare}>
-                             <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-                             alt="카카오톡 공유 보내기 버튼" width='35px' height='35px' />
-                             </button>
-                         </div>
-                     </div>
-                     <div className={styles.images}>
-                         <img src={product !== null ? product.url : null} alt='이미지' />
-                     </div>
-                 </div>
-                 </div>
-                ))}
-                </Transition>
-            </div>
-            <Reviews />
-            <Footer />
-        </div>
+        { states.loading ? <div className={styles.load}><h2>Loading...</h2></div> :
+         <div className={styles.body} ref={scrollref}>
+         <Nav user={user} />
+         <div className={styles.sort}>
+         <Category />
+         <Transition in={toggle} timeout={500} appear>
+             { (state =>  (
+                 <div style={ {...defaultStyle, ...transitionStyles[state]}}>
+                  <div className={styles.container}>
+                  <div className={styles.fonts}>
+                      <p>{states.data !== null ? states.data.name : null}</p>
+                      <p>{states.data !== null ? comma(states.data.price) : null}원</p>
+                      <p>3,000원 (50,000원 이상 구매 시 무료)</p>
+                      <br/>
+                      <p>PRODUCT INFO &gt;</p>
+                      <p>SHIPPING INFO &gt;</p>
+                      <p>SIZEGUIDE INFO &gt;</p>
+                      <br/>
+                      <h5>TOTAL &nbsp;:&nbsp; {states.data !== null ? comma(states.data.price) : null}원</h5>
+                      <div className={styles.button}>
+                          <button onClick={addbuy}>BUY NOW</button>
+                          <button onClick={additem}>ADD CART</button>
+                          <button onClick={addwish}>WISH LIST</button>
+                          <button id='kakaotalk-sharing-btn' onClick={addShare}>
+                          <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+                          alt="카카오톡 공유 보내기 버튼" width='35px' height='35px' />
+                          </button>
+                      </div>
+                  </div>
+                  <div className={styles.images}>
+                      <img src={states.data !== null ? states.data.url : null} alt='이미지' />
+                  </div>
+              </div>
+              </div>
+             ))}
+             </Transition>
+         </div>
+         <Reviews />
+         <Footer />
+     </div>
+        }
+       
         </>
     )
 }
