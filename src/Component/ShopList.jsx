@@ -1,9 +1,9 @@
 import React from 'react';
-import ListCard from './ListCard';
-import styles from './List.module.css';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, lazy, Suspense } from 'react';
 import  Pagination  from './Pagegination';
 import './ShopList.css';
+
+const ListCardComponent = lazy(() => import('./ListCard')); //lazy 라이브러리로 지연 로딩 구현
 
 
 
@@ -15,6 +15,9 @@ const ShopList = ( { Goods }) => {
   const [limit, setLimit] = useState(12);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
+
+ 
+
 
   useEffect( () => {
     
@@ -40,9 +43,11 @@ const ShopList = ( { Goods }) => {
     return (
       <div ref={scrollref}>
           <div className='shop' ref={pageref} onAnimationEnd={aniend}>
-          { Goods.slice(offset,offset + limit).map( (Good, index) => (
-            <ListCard key = {index} url = {Good.url} price = {Good.price} name = {Good.name}  />
+            <Suspense>
+            { Goods.slice(offset,offset + limit).map( (Good, index) => (
+            <ListCardComponent key = {index} url = {Good.url} price = {Good.price} name = {Good.name} page={page}  />
           ))}
+            </Suspense>
         </div>
         <div className='pagenation'>
         <Pagination total={Goods.length} limit={limit} page={page} setPage={setPage} />
