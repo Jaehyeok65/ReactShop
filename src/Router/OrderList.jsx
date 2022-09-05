@@ -6,8 +6,9 @@ import styles from '../Component/Orderlist.module.css';
 import Footer from '../Component/Footer';
 import { Link } from 'react-router-dom';
 import useAsync  from '../Module/useAsync';
-import { getShipList } from '../Module/getList';
+import { getShipList } from '../Api/getShipList';
 import { Formatting } from '../Module/Formatting';
+import Table from '../Module/Table';
 
 
 const duration = 1000;
@@ -53,8 +54,6 @@ const OrderList = () => {
     const [toggle, setToggle] = useState(false);
 
     const [states, refetch] = useAsync(() => getShipList(users,date),[]); //주문 내역을 db에서 받아옴
-
-    console.log(states.data);
 
     useEffect(() => {
         userCheck();
@@ -125,6 +124,7 @@ const OrderList = () => {
     
 
     return (
+
         <div className={styles.body} ref={scrollref}>
             <Nav />
             <div className={styles.sort}>
@@ -153,23 +153,7 @@ const OrderList = () => {
                             <th>주문처리상태</th>
                             <th>취소/교환/반품</th>
                         </tr>
-                        { states.data !== null && states.data.length !== 0 ? 
-                             states.data.map((item, index) => (
-                                item.item.map((items) => (
-                                    <tr>
-                                        <td key = {index}>{items.date}<br/><Link to={`/orderdetail/${items.orderid}`} className={styles.textlink}>[{items.orderid}]</Link></td>
-                                        <td><Link to={`/product/${items.name}`}><img src={items.url} alt={items.name} width='110px' height='120px' /></Link></td>
-                                        <td>{items.name}</td>
-                                        <td>1</td>
-                                        <td>{items.price}</td>
-                                        <td>배송중</td>
-                                        <td>불가</td>
-                                    </tr>
-                                ))
-                            ))
-                         :  <tr>
-                            <td colSpan={7} style={{color : 'gray'}}>주문 내역이 없습니다.</td>
-                            </tr>}
+                       <Table states={states} links = {true} />
                     </table>
                 </div>
             )}

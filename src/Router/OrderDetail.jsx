@@ -5,6 +5,9 @@ import Footer from '../Component/Footer';
 import Nav from '../Component/Nav';
 import styles from '../Component/OrderDetail.module.css';
 import { dbService } from '../mybase';
+import Table from '../Module/Table';
+import useAsync from '../Module/useAsync';
+import { getDetailList } from '../Api/getDetailList';
 
 
 
@@ -12,22 +15,11 @@ import { dbService } from '../mybase';
 const OrderDetail = () => {
 
     const { orderid } = useParams();
-    const [order, setOrder] = useState([]);
 
 
-    useEffect(() => {
-        getData();
-        
-    }, [])
+    const [states, refetch] = useAsync(() => getDetailList(orderid),[]);
 
-    const getData = async() => {
-        
-        const data = await dbService.collection('shipping').where('orderid','==',orderid).get();
-        data.forEach( item => {
-            setOrder( prev => [...prev, item.data()]);
-        })
-
-    }
+    console.log(states);
 
     
 
@@ -53,23 +45,7 @@ const OrderDetail = () => {
                             <th>주문처리상태</th>
                             <th>취소/교환/반품</th>
                         </tr>
-                        { order !== null && order.length !== 0 ? 
-                             order.map((item) => (
-                                item.item.map((items,index) => (
-                                    <tr>
-                                        <td key = {index}>{items.date}<br/>[{items.orderid}]</td>
-                                        <td><Link to={`/product/${items.name}`}><img src={items.url} alt={items.name} width='110px' height='120px' /></Link></td>
-                                        <td>{items.name}</td>
-                                        <td>1</td>
-                                        <td>{items.price}</td>
-                                        <td>{items.shipstate}</td>
-                                        <td>{items.canclestate}</td>
-                                    </tr>
-                                ))
-                            ))
-                         :  <tr>
-                            <td colSpan={7} style={{color : 'gray'}}>주문 내역이 없습니다.</td>
-                            </tr>}
+                       <Table states={states}/>
                     </table>
                     </div>
             </div>
@@ -81,4 +57,4 @@ const OrderDetail = () => {
 }
 
 
-export default OrderDetail;
+export default React.memo(OrderDetail);
