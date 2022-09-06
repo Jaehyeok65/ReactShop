@@ -4,11 +4,12 @@ import Nav from '../Component/Nav';
 import Category from '../Component/Category';
 import styles from '../Component/Orderlist.module.css';
 import Footer from '../Component/Footer';
-import { Link } from 'react-router-dom';
 import useAsync  from '../Module/useAsync';
 import { getShipList } from '../Api/getShipList';
-import { Formatting } from '../Module/Formatting';
-import Table from '../Module/Table';
+import OrderTable from '../Module/OrderTable';
+import OrderSearch from './OrderList/OrderSearch';
+import { InitDate } from './OrderList/InitDate';
+import { UserCheck } from './OrderList/UserCheck';
 
 
 const duration = 1000;
@@ -25,19 +26,6 @@ const transitionStyles = {
   exited:  { opacity: 0 },
 };
 
-const btn = {
-    border : 'none',
-    fontWeight : 'bold',
-    background : 'white',
-    textDecoration:'underline',
-    textUnderlineOffset: '20px',
-    transform: 'translateY(-3px)'
-}
-
-const btn1 = {
-    border : 'none',
-    background : 'white',
-}
 
 const OrderList = () => {
 
@@ -46,7 +34,6 @@ const OrderList = () => {
     const [users, setUsers] = useState(() => 
         JSON.parse(window.sessionStorage.getItem('user')) || null
     )
-    const [btnstate, setBtnstate] = useState(true);
     const [date, setDate] = useState({ 
         firstDate : undefined,
         secondDate : undefined
@@ -62,67 +49,12 @@ const OrderList = () => {
         scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     }, [])
 
-
    
+    const initDate = InitDate(setDate); //오늘 날짜를 Formatting해서 가져옴
 
-   
-
-    const initDate = useCallback( () => {
-        const first = Formatting(new Date());
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = (today.getMonth() + 3);
-        const day = today.getDate();
-        const second = Formatting(new Date(year,month,day));
-        setDate( {
-            firstDate : first,
-            secondDate : second
-        });
-    },[date]);
-
-
+    const userCheck = UserCheck(users); //유저의 로그인 정보를 가져옴
 
     
-
- 
-
-    const onChange = useCallback( (e) => {
-        const { name , value } = e.target;
-        const response = {
-            ...date,
-            [name] : value
-        }
-        setDate(() => response);
-    },[date]);
-
-
-
-    
-
-    
-
-    const userCheck = useCallback( () => {
-        if(users === null) {
-            alert('로그인 후 이용가능합니다.');
-            window.location.href='/login';
-        }
-    },[users]);
-
-    const onBtnClick1 = useCallback(() => {
-        setBtnstate(true);
-    },[btnstate]);
-
-    const onBtnClick2 = useCallback(() => {
-        setBtnstate(false);
-    },[btnstate]);
-
-
-
-
-    
-
-    
-
     return (
 
         <div className={styles.body} ref={scrollref}>
@@ -133,10 +65,7 @@ const OrderList = () => {
             <Transition in={toggle} timeout={500}>
             { (state) => (
                 <div style={{...defaultStyle,...transitionStyles[state]}}>
-                    <p><button style={ btnstate ? btn : btn1 } onClick={onBtnClick1}>주문내역조회</button><span style={{marginRight : '32px'}}></span><button style={ btnstate ? btn1 : btn} onClick={onBtnClick2}>취소/반품/교환 내역</button></p>
-                    <p className={styles.date}><input type='date' name='firstDate' value={date.firstDate} onChange={onChange} /> ~ <input type='date' name='secondDate' value={date.secondDate} onChange={onChange}/>
-                    <button className={styles.btn} onClick={refetch}>조회</button>
-                    </p>
+                    <OrderSearch date={date} setDate={setDate} refetch={refetch} />
                     <ul className={styles.list}>
                         <li>기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을 조회하실 수 있습니다.</li>
                         <li>주문번호를 클릭하시면 해당 주문의 상세 내역을 확인하실 수 있습니다.</li>
@@ -153,7 +82,7 @@ const OrderList = () => {
                             <th>주문처리상태</th>
                             <th>취소/교환/반품</th>
                         </tr>
-                       <Table states={states} links = {true} />
+                       <OrderTable states={states} links = {true} />
                     </table>
                 </div>
             )}
