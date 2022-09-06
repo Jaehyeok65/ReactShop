@@ -6,8 +6,10 @@ import { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import Footer from '../Component/Footer';
 import { Transition } from 'react-transition-group';
-import { Link } from 'react-router-dom';
-import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import { OnRemove } from '../Module/OnRemove';
+import CartTable from './Cart/CartTable';
+import CartOrder from './Cart/CartOrder';
+import CartRemove from './Cart/CartRemove';
 
 const duration = 1000;
 
@@ -41,135 +43,6 @@ const Cart = ( { user }) => {
         scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     },[]);
 
-    const onChange = (e) => {
-
-        const array = [...cart];
-        for(let i in array) {
-            if(array[i].name === e.name) {
-                array[i].check = !array[i].check;
-            }
-        }
-        setCart(array);
-    }
-
-    const onCheck = () => {
-        const array = [...cart];
-        for(let i in array) {
-            if(array[i].check === true) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    const onAllbuy = () => {
-        let price = 0;
-        for(let i in cart) {
-            price += parseInt(cart[i].price * cart[i].quantity);
-        }
-        window.localStorage.setItem('pay',JSON.stringify(cart));
-        window.localStorage.setItem('paytotal',JSON.stringify(price));
-        window.location.href='/payment';
-    }
-
-    const onSelectbuy = () => {
-        const check = onCheck();
-        if(check) {
-            alert('선택된 상품이 없습니다.');
-            return;
-        }
-        const array = cart.filter(item => item.check === true);
-        let price = 0;
-        for(let i in array) {
-            price += parseInt(array[i].price * array[i].quantity);
-        }
-        window.localStorage.setItem('pay',JSON.stringify(array));
-        window.localStorage.setItem('paytotal',JSON.stringify(price));
-        window.location.href='/payment';
-    }
-
-    const price = (cartarray) => {
-        let money = 0;
-        for(let i in cartarray) {
-            money += cartarray[i].price * cartarray[i].quantity
-        };
-
-        return money;
-    }
-
-    
-
-    const onRemove = () => {
-
-        const checks = onCheck();
-        if(checks) {
-            alert('선택된 상품이 없습니다.');
-            return;
-        }
-
-        const res = window.confirm('선택하신 상품을 삭제하시겠습니까?');
-
-        if(res) {
-        const array = cart.filter(item => item.check === false);
-        let price = 0;
-        for(let i in array) {
-            price += parseInt(array[i].price * array[i].quantity);
-        }
-        
-        window.localStorage.setItem('total',JSON.stringify(price));
-        window.localStorage.setItem('cart',JSON.stringify(array));
-        window.location.href = "/cart";
-        }
-    }
-
-    const onRemoveAll = () => {
-        const response = window.confirm('장바구니를 비우시겠습니까? ')
-        if(response) {
-        window.localStorage.removeItem('cart');
-        window.localStorage.removeItem('total');
-        window.location.href='/cart';
-        }
-    }
-
-    const onQuantityup = (item) => {
-        const temp = {
-            ...item,
-            quantity : item.quantity+1
-        }
-
-        //console.log(temp);
-
-        const res = cart.map((q) => (
-            q.name === item.name ? temp : q
-        ));
-
-        const money = price(res);
-
-        setCart(() => res);
-        setTotal(() => money);
-    }
-
-    const onQuantitydown = (item) => {
-
-        const numbers = (item.quantity - 1) > 0 ? item.quantity - 1 : item.quantity;
-        const temp = {
-            ...item,
-            quantity : numbers
-        }
-
-        //console.log(temp);
-
-        const res = cart.map((q) => (
-            q.name === item.name ? temp : q
-        ));
-
-        const money = price(res);
-
-        setCart(() => res);
-        setTotal(() => money);
-    }
-
-
 
 
     return(
@@ -198,24 +71,7 @@ const Cart = ( { user }) => {
                         </tr>
                         </thead>
                         <tbody>
-                            { cart !== null ?  cart.map( (data, index) => (
-                            <tr key={index}>
-                                <td>{<input type='checkbox' name='check' value={data.check} onChange={() => onChange(data)} />}</td>
-                                <td className={styles.imgs}><Link to={`product/${data.name}`}>{<img src={data.url} alt = {data.name} width='110px' height='120px' />}</Link></td>
-                                <td><Link to={`product/${data.name}`} className={styles.textlink}>{data.name}</Link></td>
-                                <td>{data.price}원</td>
-                                <td><div className={styles.quantity}><span>{data.quantity}</span>
-                                <div className={styles.arrowbutton}>
-                                    <button className={styles.arrow} onClick={() => onQuantityup(data)}><FaArrowUp /></button>
-                                    <button className={styles.arrow} onClick={() => onQuantitydown(data)}><FaArrowDown /></button>
-                                    </div>
-                                </div>
-                                </td>
-                                <td>{0}</td>
-                                <td>{0}</td>
-                                <td>{data.price * data.quantity}원</td>
-                            </tr>
-                        )) : null }
+                        <CartTable cart={cart} setCart={setCart} setTotal={setTotal} />
                         </tbody>
                         <tfoot>
                             <tr>
@@ -225,33 +81,10 @@ const Cart = ( { user }) => {
                             </tr>
                         </tfoot>
                     </table>
-                    <div className={styles.tfoots}>
-                    <p style={{ marginLeft : '8px', marginTop : '16px'}}>선택 상품을 <button style={{ background:  'black' , color : 'white', fontSize : '11px' }} onClick={onRemove}>삭제</button></p>
-                    <p><button style={{ background:  'black' , color : 'white', fontSize : '11px'}} onClick = {onRemoveAll}>장바구기 비우기</button><button style={{margin : '4px', background : 'black', color : 'white', fontSize : '11px'}}>견적서 출력</button></p>
-                    </div>
+                    <CartRemove cart={cart} />
                     <br />
                     <br />
-                    <table border = "1px solid gray" className={styles.secondtable}>
-                        <thead>
-                            <tr>
-                                <th>총 상품금액</th>
-                                <th>총 배송비</th>
-                                <th>결제 예정 금액</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{total}원</td>
-                                <td>+ 0원</td>
-                                <td>= {total}원</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div className={styles.order}>
-                    <button onClick={onAllbuy}>전체상품주문</button>
-                    <button onClick={onSelectbuy}>선택상품주문</button>
-                    </div>
-                    <br/>
+                    <CartOrder cart={cart} total={total} />
                     </div> : <div><p style={{marginBottom : '50%', textAlign : 'center', fontSize : '12px', color : 'gray'}}>장바구니가 비어있습니다.</p></div>
                             }
                     </div>)
