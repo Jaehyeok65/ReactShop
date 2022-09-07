@@ -9,7 +9,7 @@ const WishSelected = ( { wish }) => {
 
     const additem = WishAddItem(wish);
 
-    const onRemove = OnRemove(wish,true);
+    const onRemove = OnRemove(wish, 'wish');
 
 
     return(

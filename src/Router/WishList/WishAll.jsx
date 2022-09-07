@@ -13,7 +13,7 @@ const WishAll = ( { wish }) => {
         <>
         <p style={{marginTop : '16px'}}>
             <button className={styles.wishbutton} onClick={onAllbuy}>전체상품주문</button>
-            <button className={styles.wishbutton} onClick={() => OnRemoveAll(true)}>관심상품 비우기</button>
+            <button className={styles.wishbutton} onClick={() => OnRemoveAll('wish')}>관심상품 비우기</button>
         </p>
         </>
     )

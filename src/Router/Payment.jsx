@@ -3,13 +3,13 @@ import Nav from '../Component/Nav';
 import Category from '../Component/Category';
 import styles from '../Component/Cart.module.css'
 import { Transition } from 'react-transition-group';
-import { Link } from 'react-router-dom';
 import Footer from '../Component/Footer';
 import Shipinfo from '../Component/Shipinfo';
 import Paymentway from '../Component/Paymentway';
-import { dbService } from '../mybase';
-import { v4 as uuidv4 } from 'uuid';
-import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import { OnSubmit } from './Payment/OnSubmit';
+import { OnTest } from './Payment/OnTest';
+import CartTable from './Cart/CartTable';
+import CartRemove from './Cart/CartRemove';
 
 
 const duration = 1000;
@@ -28,21 +28,25 @@ const transitionStyles = {
 
 
 
+
+
 const Payment = () => {
 
-    const [pay, setPay] = useState(() => JSON.parse(window.localStorage.getItem('pay')) || null) //로컬스토리지에서 결제 정보를 가져옴
+    const [pay, setPay] = useState(() => JSON.parse(window.localStorage.getItem('payment')) || null) //로컬스토리지에서 결제 정보를 가져옴
     const [user, setUser] = useState(() => JSON.parse(window.sessionStorage.getItem('user')) || null); //세션스토리지에서 유저 정보를 가져옴
     const [toggle, setToggle] = useState(false);
     const [paytotal, setPaytotal] = useState(() => JSON.parse(window.localStorage.getItem('paytotal')) || null);
     
     const [ship, setShip] = useState({
-        name : JSON.parse(window.sessionStorage.getItem('user')).displayName || '',  //주문자 이름
+        name : JSON.parse(window.sessionStorage.getItem('user')) ? JSON.parse(window.sessionStorage.getItem('user')).displayName : '',  //주문자 이름
         postcode : '', //우편 번호
         address : '',  //배송 주소
         phone : { first : '010', second : '', third : ''}, //주문자 핸드폰
         email : { first : '', second : ''}, //주문자 이메일
         message : '' //요청사항 (필수x)
     });
+
+    //console.log(JSON.parse(window.sessionStorage.getItem('user')));
 
     const scrollref = useRef();
     const nameInput = useRef();
@@ -70,198 +74,10 @@ const Payment = () => {
         setToggle(prev => !prev);
     }
 
-    const onCheck = () => {
-        const array = [...pay];
-        for(let i in array) {
-            if(array[i].check === true) {
-                return false;
-            }
-        }
-        return true;
-    }
 
-    const onChange = (e) => {
-
-        const array = [...pay];
-        for(let i in array) {
-            if(array[i].name === e.name) {
-                array[i].check = !array[i].check;
-            }
-        }
-        setPay(array);
-    }
-
-    const onRemove = () => {
-
-        const checks = onCheck();
-        if(checks) {
-            alert('선택된 상품이 없습니다.');
-            return;
-        }
-
-        const res = window.confirm('선택하신 상품을 삭제하시겠습니까?');
-
-        if(res) {
-        const array = pay.filter(item => item.check === false);
-        let price = 0;
-        for(let i in array) {
-            price += parseInt(array[i].price) * 1000;
-        }
-        
-        window.localStorage.setItem('paytotal',JSON.stringify(price));
-        window.localStorage.setItem('pay',JSON.stringify(array));
-        window.location.href = "/payment";
-        }
-    }
-
-    const onRemoveAll = () => {
-        const response = window.confirm('장바구니를 비우시겠습니까? ')
-        if(response) {
-        window.localStorage.removeItem('pay');
-        window.localStorage.removeItem('paytotal');
-        window.location.href='/payment';
-        }
-    }
-
-    const onTest = () => {
-        if(ship.name === '') {
-            alert('수령자 이름을 입력해주세요.');
-            nameInput.current.focus();
-            return false;
-        }
-        else if(ship.postcode === '') {
-            alert('우편번호를 입력해주세요.');
-            postcodeInput.current.focus();
-            return false;
-        }
-        else if(ship.address === '') {
-            alert('상세주소를 입력해주세요.');
-            addressInput.current.focus();
-            return false;
-        }
-        else if(ship.phone.first === '' || ship.phone.second === '' || ship.phone.third === '') {
-            alert('전화번호를 입력해주세요.');
-            if(ship.phone.first === '') {
-                firstphoneInput.current.focus();
-            }
-            else if(ship.phone.second === '') {
-                secondphoneInput.current.focus();
-            }
-            else if(ship.phone.third === '') {
-                thirdphoneInput.current.focus();
-            }
-            return false;
-        }
-        else if(ship.email.first === '' || ship.email.second === '') {
-            alert('이메일을 입력해주세요.');
-            if(ship.email.first === '') {
-                firstemailInput.current.focus();
-            }
-            else if(ship.email.second === '') {
-                secondemailInput.current.focus();
-            }
-            return false;
-        }
-        return true;
-    }
-
-    //console.log(user);
-
-    const Formatting = (source, delimiter = '-') => {
-        const year = source.getFullYear();
-        let month = (source.getMonth() + 1);
-        if(parseInt(month) < 10 && parseInt(month) > 0) {
-            month = '0' + month;
-        }
-        const day = (source.getDate());
+    const onTest = OnTest(ship,nameInput,postcodeInput,addressInput,firstphoneInput,secondphoneInput,thirdphoneInput,firstemailInput,secondemailInput);
     
-        return [year, month, day].join(delimiter);
-    }
-
-    const price = (cartarray) => {
-        let money = 0;
-        for(let i in cartarray) {
-            money += cartarray[i].price * cartarray[i].quantity
-        };
-
-        return money;
-    }
-
-    const onQuantityup = (item) => {
-        const temp = {
-            ...item,
-            quantity : item.quantity+1
-        }
-
-        //console.log(temp);
-
-        const res = pay.map((q) => (
-            q.name === item.name ? temp : q
-        ));
-
-        const money = price(res);
-
-        setPay(() => res);
-        setPaytotal(() => money);
-    }
-
-    const onQuantitydown = (item) => {
-
-        const numbers = (item.quantity - 1) > 0 ? item.quantity - 1 : item.quantity;
-        const temp = {
-            ...item,
-            quantity : numbers
-        }
-
-        //console.log(temp);
-
-        const res = pay.map((q) => (
-            q.name === item.name ? temp : q
-        ));
-
-        const money = price(res);
-
-        setPay(() => res);
-        setPaytotal(() => money);
-    }
-
-
-    const onSubmit = async() => {
-
-        const today = Formatting(new Date());
-
-        const res = { //데이터베이스에 전달될 데이터 구조 갱신
-            name : ship.name,
-            address : ship.postcode + ' '+ ship.address,
-            phone : `${ship.phone.first}-${ship.phone.second}-${ship.phone.third}`,
-            email : `${ship.email.first}@${ship.email.second}`,
-            totalprice : paytotal,  
-            date : today  
-        }
-
-        const orderid = uuidv4(); //한 번의 주문에는 주문번호가 같아야하기 때문에 미리 주문번호 할당
-
-        const pays = pay.map(item => { //각각의 아이템에 주문번호와 주문 일자 데이터를 추가함.
-            const items = {...item, date : today, orderid : orderid, shipstate : '배송전', canclestate : '불가'}
-            return items;
-        })
-
-        
-        const response = { ...res,
-        item : pays,
-        uid : user.uid,
-        useremail : user.email,
-        orderid : orderid
-        };
-        const data = await dbService.collection('shipping').add(response);
-
-        if(data) {
-            alert('결제가 완료되었습니다.');
-            window.location.href='/';
-        }
-
-        
-    }
+    const onSubmit = OnSubmit(ship,paytotal,pay,user);
 
     
     
@@ -291,24 +107,7 @@ const Payment = () => {
                 </tr>
                 </thead>
                 <tbody>
-                    { pay !== null ?  pay.map( (data, index) => (
-                    <tr key={index}>
-                        <td>{<input type='checkbox' name='check' value={data.check} onChange={() => onChange(data)} />}</td>
-                        <td className={styles.imgs}><Link to={`product/${data.name}`}>{<img src={data.url} alt = {data.name} width='110px' height='120px' />}</Link></td>
-                        <td><Link to={`product/${data.name}`} className={styles.textlink}>{data.name}</Link></td>
-                        <td>{data.price}원</td>
-                        <td><div className={styles.quantity}><span>{data.quantity}</span>
-                                <div className={styles.arrowbutton}>
-                                    <button className={styles.arrow} onClick={() => onQuantityup(data)}><FaArrowUp /></button>
-                                    <button className={styles.arrow} onClick={() => onQuantitydown(data)}><FaArrowDown /></button>
-                                    </div>
-                                </div>
-                                </td>
-                        <td>{0}</td>
-                        <td>{0}</td>
-                        <td>{data.price * data.quantity}원</td>
-                    </tr>
-                )) : null }
+                 <CartTable item={pay} setState={setPay} setTotal={setPaytotal} />
                 </tbody>
                 <tfoot>
                     <tr>
@@ -318,10 +117,7 @@ const Payment = () => {
                     </tr>
                 </tfoot>
             </table>
-            <div className={styles.tfoots}>
-            <p style={{ marginLeft : '8px', marginTop : '16px'}}>선택 상품을 <button style={{ background:  'black' , color : 'white', fontSize : '11px' }} onClick={onRemove}>삭제</button></p>
-            <p><button style={{ background:  'black' , color : 'white', fontSize : '11px'}} onClick = {onRemoveAll}>결제항목 비우기</button><button style={{margin : '4px', background : 'black', color : 'white', fontSize : '11px'}}>견적서 출력</button></p>
-            </div>
+                <CartRemove item={pay} name='payment' total='paytotal' />
             <br />
             <br />
             <Shipinfo ship={ship} setShip={setShip} nameInput={nameInput} addressInput={addressInput} 
