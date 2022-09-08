@@ -10,6 +10,7 @@ import { OnSubmit } from './Payment/OnSubmit';
 import { OnTest } from './Payment/OnTest';
 import CartTable from './Cart/CartTable';
 import CartRemove from './Cart/CartRemove';
+import PayOrdertable from './Payment/PayOrdertable';
 
 
 const duration = 1000;
@@ -113,7 +114,7 @@ const Payment = () => {
                     <tr>
                         <td colSpan='9' style={{textAlign : 'center'}}>
                             상품구매금액 {paytotal} + 배송비 0 = 합계 : {paytotal}원 
-                        </td>
+                        </td> 
                     </tr>
                 </tfoot>
             </table>
@@ -125,28 +126,7 @@ const Payment = () => {
                 thirdphoneInput={thirdphoneInput} firstemailInput={firstemailInput} secondemailInput={secondemailInput}
                 />
             <h4 style={{marginTop : '7%', fontSize : '12px'}}>결제 예정 금액</h4>
-                <table border='1' className={styles.paytable}>
-                    <tr>
-                        <th colSpan={2}>총 주문 금액</th>
-                        <th colSpan={2}>총 할인 + 부가 결제 금액</th>
-                        <th colSpan={1}>총 결제 금액</th>
-                    </tr>
-                    <tr>
-                        <td style={{fontWeight : 'bold', fontSize : '16px'}} colSpan={2}>{paytotal}원</td>
-                        <td style={{fontWeight : 'bold', fontSize : '16PX'}} colSpan={2}>0원</td>
-                        <td style={{fontWeight : 'bold' , fontSize : '16px'}} colSpan={1}>= {paytotal}원</td>
-                    </tr>
-                </table>
-                <table border='1' className={styles.paytable2}>
-                    <tr>
-                        <td>총 할인 금액</td>
-                        <td colSpan={2}>0원</td>
-                    </tr>
-                    <tr>
-                        <td>총 부가 결제 금액</td>
-                        <td>0원</td>
-                    </tr>
-                </table>
+                <PayOrdertable paytotal={paytotal} />
                 <Paymentway paytotal={paytotal} onTest={onTest} onSubmit={onSubmit}   />
             <br/>
             </div> : <div><p style={{marginBottom : '50%', textAlign : 'center', fontSize : '12px', color : 'gray'}}>결제항목이 비어있습니다.</p></div>
