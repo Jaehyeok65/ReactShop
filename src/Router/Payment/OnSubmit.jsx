@@ -6,7 +6,7 @@ import { useCallback } from 'react';
 
 
 
- export const OnSubmit = async(ship , paytotal, pay, user) => {
+ export const OnSubmit = (ship , paytotal, pay, user) => {
 
     const onSubmit = useCallback(async() => {
 
