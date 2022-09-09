@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../../Component/Cart.module.css'
 import { OnAllBuy } from '../../Module/OnAllBuy';
 import { OnSelectBuy } from '../../Module/OnSelectBuy';
+import { Comma } from '../Product/Comma';
 
 
 const CartOrder = ( { total, cart }) => {
@@ -24,9 +25,9 @@ const CartOrder = ( { total, cart }) => {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{total}원</td>
+                                <td>{Comma(total)}원</td>
                                 <td>+ 0원</td>
-                                <td>= {total}원</td>
+                                <td>= {Comma(total)}원</td>
                             </tr>
                         </tbody>
                     </table>

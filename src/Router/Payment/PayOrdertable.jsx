@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../../Component/Cart.module.css'
+import { Comma } from '../Product/Comma';
 
 
 
@@ -15,9 +16,9 @@ const PayOrdertable = ( { paytotal } ) => {
                         <th colSpan={1}>총 결제 금액</th>
                     </tr>
                     <tr>
-                        <td style={{fontWeight : 'bold', fontSize : '16px'}} colSpan={2}>{paytotal}원</td>
+                        <td style={{fontWeight : 'bold', fontSize : '16px'}} colSpan={2}>{Comma(paytotal)}원</td>
                         <td style={{fontWeight : 'bold', fontSize : '16PX'}} colSpan={2}>0원</td>
-                        <td style={{fontWeight : 'bold' , fontSize : '16px'}} colSpan={1}>= {paytotal}원</td>
+                        <td style={{fontWeight : 'bold' , fontSize : '16px'}} colSpan={1}>= {Comma(paytotal)}원</td>
                     </tr>
         </table>
         <table border='1' className={styles.paytable2}>
