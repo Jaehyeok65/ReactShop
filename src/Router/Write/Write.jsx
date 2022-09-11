@@ -42,7 +42,7 @@ const Write = () => {
     const [ input, setInput ] = useState({
         subject : '',
         content : '',
-        productname : states.data.name,
+        productname : '',
         name : JSON.parse(window.sessionStorage.getItem('user')) !== null ? JSON.parse(window.sessionStorage.getItem('user')).displayName : '',
         date : '',
         toggle : false,
@@ -60,8 +60,6 @@ const Write = () => {
 
 
     const getUpdate = GetUpdate(update, setInput);
-
-    console.log(states);
 
 
     return (
@@ -83,7 +81,7 @@ const Write = () => {
                      <div className={styles.flexcontainer3}>
                      <hr/>
                      <WriteTextbox input={input} setInput={setInput} />
-                     <WriteUi input={input} name={name} update={update} />
+                     <WriteUi input={input} name={name} update={update} states={states} />
                      </div>
                  </div>
              </div>

@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
-export const OnReviewSubmit = (input, update) => {
+export const OnReviewSubmit = (input, update, states) => {
 
     const onSubmit = useCallback(async() => {
 
@@ -18,15 +18,16 @@ export const OnReviewSubmit = (input, update) => {
         const today = Formatting(new Date());
         const res = { ...input,
         date : today,
-        id : uuidv4()
+        id : uuidv4(),
+        productname : states.data.name,
+        url : states.data.url
         }
 
 
         if( update === 'false') { //새로운 write일 경우
-
-        await dbService.collection('review').add(res);
-        window.history.back();
-
+            await dbService.collection('review').add(res);
+            //window.location.href = `/product/${states.data.name}`;
+            window.history.back();
         }
         else {
             await dbService.collection('review').doc(update).update({
@@ -37,7 +38,7 @@ export const OnReviewSubmit = (input, update) => {
             window.history.back();
             
         }
-    },[input, update]);
+    },[input, update, states]);
 
     return onSubmit;
 

@@ -8,13 +8,13 @@ import { OnReviewSubmit } from './OnReviewSubmit';
 
 
 
-const WriteUi = ( { input, name, update }) => {
+const WriteUi = ( { input, name, update, states }) => {
 
     const onCancle = () => {
         window.location.href=`/product/${name}`;
     }
 
-    const onSubmit = OnReviewSubmit(input, update);
+    const onSubmit = OnReviewSubmit(input, update, states);
 
 
 
