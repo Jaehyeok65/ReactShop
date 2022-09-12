@@ -4,7 +4,7 @@ import Category from '../../Component/Category';
 import styles from '../../Component/Cart.module.css'
 import { Transition } from 'react-transition-group';
 import Footer from '../../Component/Footer';
-import Shipinfo from '../../Component/Shipinfo';
+import Shipinfo from './Shipinfo';
 import Paymentway from './Paymentway';
 import { OnSubmit } from './OnSubmit';
 import { OnTest } from './OnTest';
@@ -12,6 +12,10 @@ import CartTable from '../Cart/CartTable';
 import CartRemove from '../Cart/CartRemove';
 import PayOrdertable from './PayOrdertable';
 import { Comma } from '../Product/Comma';
+import { Desktop } from '../../Module/DeskTop';
+import { Mobile } from '../../Module/Mobile';
+import MobileCartTable from '../Cart/MobileCartTable';
+
 
 
 const duration = 1000;
@@ -66,7 +70,7 @@ const Payment = () => {
     useEffect( () => {
         if(user === null) {
             alert('로그인 후 이용 가능합니다.');
-            window.location.href = '/login';
+            window.location.href=`${process.env.PUBLIC_URL}/login`;
         }
         onToggle();
         scrollref.current.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
@@ -95,6 +99,7 @@ const Payment = () => {
                   (
              <div style={{...defaultStyle,...transitionStyles[state]}}>
                 { pay !== null && pay.length !== 0 ? <div>
+                <Desktop>
                <table border = "1px solid gray">
                 <thead>
                 <tr>
@@ -120,6 +125,12 @@ const Payment = () => {
                 </tfoot>
             </table>
                 <CartRemove item={pay} name='payment' total='paytotal' />
+                </Desktop>
+                <Mobile>
+                    <table border="1px sold gray">
+                        <MobileCartTable item={pay} setState={setPay} setTotal={setPaytotal} name='payment' total='paytotal' />
+                    </table>
+                </Mobile>
             <br />
             <br />
             <Shipinfo ship={ship} setShip={setShip} nameInput={nameInput} addressInput={addressInput} 

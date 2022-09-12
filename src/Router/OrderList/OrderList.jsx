@@ -6,10 +6,13 @@ import styles from '../../Component/Orderlist.module.css';
 import Footer from '../../Component/Footer';
 import useAsync  from '../../Module/useAsync';
 import { getShipList } from '../../Api/getShipList';
-import OrderTable from '../../Module/OrderTable';
+import OrderTable from './OrderTable';
 import OrderSearch from './OrderSearch';
 import { InitDate } from './InitDate';
 import { UserCheck } from '../../Module/UserCheck';
+import { Desktop } from '../../Module/DeskTop';
+import { Mobile } from '../../Module/Mobile';
+import MobileOrderTable from './MobileOrderTable';
 
 
 const duration = 1000;
@@ -76,6 +79,7 @@ const OrderList = () => {
                         <li>취소/교환/반품 신청은 주문완료 일 기준 7일까지 가능합니다.</li>
                     </ul>
                     <h4>주문 상품 정보</h4>
+                    <Desktop>
                     <table border='1px solid gray' className={styles.ordertable}>
                         <tr>
                             <th>주문일자<br/>[주문번호]</th>
@@ -88,6 +92,12 @@ const OrderList = () => {
                         </tr>
                        <OrderTable states={states} links = {true} />
                     </table>
+                    </Desktop>
+                    <Mobile>
+                        <table border='1px solid gray' className={styles.ordertable}>
+                        <MobileOrderTable states={states} links = {true} />
+                        </table>
+                    </Mobile>
                 </div>
             )}
         </Transition>

@@ -10,6 +10,11 @@ import CartTable from './CartTable';
 import CartOrder from './CartOrder';
 import CartRemove from './CartRemove';
 import { Comma } from '../Product/Comma';
+import { Desktop } from '../../Module/DeskTop';
+import { Mobile } from '../../Module/Mobile';
+import MobileCartTable from './MobileCartTable';
+import MobileCartOrder from './MobileCartOrder';
+import CartTotal from './CartTotal';
 
 const duration = 1000;
 
@@ -57,7 +62,7 @@ const Cart = ( { user }) => {
                      <div style={{...defaultStyle,...transitionStyles[state]}}>
                         { cart !== null && cart.length !== 0 ? 
                         <div>
-                        <table border = "1px solid gray">
+                        <Desktop><table border = "1px solid gray">
                         <thead>
                         <tr>
                             <th></th>
@@ -81,10 +86,22 @@ const Cart = ( { user }) => {
                             </tr>
                         </tfoot>
                     </table>
-                    <CartRemove item={cart} name='cart' total='total' />
+                    </Desktop>
+                    <Mobile>
+                    <table border = "1px solid gray">
+                        <MobileCartTable item={cart} setState={setCart} setTotal={setTotal} name='cart' total='total' />
+                    </table>
+                    </Mobile>
+                    <Desktop><CartRemove item={cart} name='cart' total='total' /></Desktop>
                     <br />
                     <br />
-                    <CartOrder cart={cart} total={total} />
+                    <CartTotal total={total} />
+                    <Desktop>
+                        <CartOrder cart={cart} />
+                    </Desktop>
+                    <Mobile>
+                        <MobileCartOrder cart={cart} />
+                    </Mobile>
                     </div> : <div><p style={{marginBottom : '50%', textAlign : 'center', fontSize : '12px', color : 'gray'}}>장바구니가 비어있습니다.</p></div>
                             }
                     </div>)

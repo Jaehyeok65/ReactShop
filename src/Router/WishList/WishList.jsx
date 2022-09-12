@@ -10,6 +10,10 @@ import { UserCheck } from '../../Module/UserCheck';
 import CartTable from '../Cart/CartTable';
 import WishSelected from './WishSelected';
 import WishAll from './WishAll';
+import { Desktop } from '../../Module/DeskTop';
+import { Mobile } from '../../Module/Mobile';
+import MobileCartTable from '../Cart/MobileCartTable';
+import MobileCartOrder from '../Cart/MobileCartOrder';
 
 const duration = 1000;
 
@@ -66,7 +70,7 @@ const WishList = ( { user }) => {
                      <div style={{...defaultStyle,...transitionStyles[state]}}>
                         { wish !== null && wish.length !== 0  ?
                         <div>
-                       <table border = "1px solid gray">
+                       <Desktop><table border = "1px solid gray">
                         <thead>
                         <tr>
                             <th></th>
@@ -85,10 +89,21 @@ const WishList = ( { user }) => {
                         <tfoot>
                         </tfoot>
                     </table>
+                    </Desktop>
+                    <Mobile>
+                    <table border = "1px solid gray">
+                        <MobileCartTable item={wish} setState={setWish} name='wish' />
+                    </table>
+                    </Mobile>
+                    <Desktop>
                     <div className={styles.tfoots2}>
                         <WishSelected wish={wish} />
                         <WishAll wish={wish} />
                     </div>
+                    </Desktop>
+                    <Mobile>
+                        <MobileCartOrder cart={wish} />
+                    </Mobile>
                     <br />
                     <br />
                     <br/></div>

@@ -4,9 +4,12 @@ import Category from '../../Component/Category';
 import Footer from '../../Component/Footer';
 import Nav from '../../Component/Nav';
 import styles from '../../Component/OrderDetail.module.css';
-import OrderTable from '../../Module/OrderTable';
+import OrderTable from './OrderTable';
 import useAsync from '../../Module/useAsync';
 import { getDetailList } from '../../Api/getDetailList';
+import { Desktop } from '../../Module/DeskTop';
+import { Mobile } from '../../Module/Mobile';
+import MobileOrderTable from './MobileOrderTable';
 
 
 
@@ -33,6 +36,7 @@ const OrderDetail = () => {
                 <Category />
                 <div className={styles.container}>
                     <h4>주문 상세 내역</h4>
+                    <Desktop>
                     <table border='1px solid gray' className={styles.ordertable}>
                         <tr>
                             <th>주문일자<br/>[주문번호]</th>
@@ -45,6 +49,12 @@ const OrderDetail = () => {
                         </tr>
                        <OrderTable states={states}/>
                     </table>
+                    </Desktop>
+                    <Mobile>
+                    <table border='1px solid gray' className={styles.ordertable}>
+                        <MobileOrderTable states={states} />
+                    </table>
+                    </Mobile>
                     </div>
             </div>
             <Footer />
