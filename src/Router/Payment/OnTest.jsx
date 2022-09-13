@@ -9,6 +9,8 @@ export const OnTest = (ship , nameInput , postcodeInput, addressInput, firstphon
     firstemailInput, secondemailInput) => {
   
         const onTest = useCallback(() => {
+            const emailRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+            const phoneRegex = /^01(?:0|1|[6-9])(?:\d{4}|\d{4})\d{4}$/;
             if(ship.name === '') {
                 alert('수령자 이름을 입력해주세요.');
                 nameInput.current.focus();
@@ -45,6 +47,17 @@ export const OnTest = (ship , nameInput , postcodeInput, addressInput, firstphon
                 else if(ship.email.second === '') {
                     secondemailInput.current.focus();
                 }
+                return false;
+            }
+            else if(!emailRegex.test(ship.email.first+"@"+ship.email.second)) {
+                console.log(ship.email.first+ship.email.second);
+                alert('이메일을 확인해주세요.')
+                firstemailInput.current.focus();
+                return false;
+            }
+            else if(!phoneRegex.test(ship.phone.first+ship.phone.second+ship.phone.third)) {
+                alert('휴대폰 번호를 확인해주세요.');
+                secondphoneInput.current.focus();
                 return false;
             }
             return true;
